@@ -7,11 +7,11 @@ import ProductDetails from "../Product/Details";
 import { useGetProduct } from "@/hooks/useGetProduct";
 import { useGetProductsBySearch } from "@/hooks/useGetProductsBySearch";
 import { useGetProductCategories } from "@/hooks/useGetProductCategories";
-import { SearchBar } from "../SearchBar/Index";
-import { FilterBar } from "../FilterBar";
-import { SortBar } from "../SortBar";
-import { SkeletonCard } from "../Skeleton/Card";
-import { BasicPagination } from "../Pagination";
+import { SearchBar } from "@/components/SearchBar/Index";
+import { FilterBar } from "@/components/FilterBar/Index";
+import { SortBar } from "@/components/SortBar";
+import { SkeletonCard } from "@/components/Skeleton/Card";
+import { BasicPagination } from "@/components/Pagination/Index";
 import { Error } from "../Error/Index";
 import { throttle } from "lodash";
 import { SkeletonFilter } from "../Skeleton/Filter";
@@ -168,7 +168,7 @@ export default function Dashboard() {
           <p>No products found. Please change your search criteria.</p>
         </div>
       )}
-      {showProductDetails &&
+      {showProductDetails && product &&
         <ProductDetails 
           open={showProductDetails}
           toggleShowDetails={toggleShowDetails}
