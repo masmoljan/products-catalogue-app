@@ -60,7 +60,7 @@ export function BasicPagination({
             </PaginationContent>
           </Pagination>
         </div>
-        <div className="flex w-1/3 justify-end items-center pr-4 sm:pr-0 gap-2">
+        <div className="flex w-1/3 justify-end items-center gap-2">
           <p className="hidden sm:block text-sm">Show per page:</p>
           <Select 
             value={`${rowsPerPage}`}

@@ -177,13 +177,15 @@ export default function Dashboard() {
           productError={ProductError}
         />
       }
-      <BasicPagination 
-        total={productsSearchCount}
-        startPage={startPage}
-        endPage={endPage}
-        handlePagination={throttleHandlePagination.current}
-        handleProductsPerPage={handleProductsPerPage}
-      />
+      {!isProductsSearchLoading &&
+        <BasicPagination 
+          total={productsSearchCount}
+          startPage={startPage}
+          endPage={endPage}
+          handlePagination={throttleHandlePagination.current}
+          handleProductsPerPage={handleProductsPerPage}
+        />
+      }
     </div>
   );
 }
