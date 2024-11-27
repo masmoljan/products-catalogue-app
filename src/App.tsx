@@ -1,6 +1,6 @@
 import './App.css';
-import Dashboard from './components/Dashboard';
-import Navigation from './components/Navigation';
+import Dashboard from '@/components/Dashboard/Index';
+import Navigation from '@/components/Navigation/Index';
 
 function App() {
 
