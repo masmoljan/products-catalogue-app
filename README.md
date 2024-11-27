@@ -19,7 +19,7 @@ To install and use this app locally follow just run:
 npm install
 ```
 
-## Usage:
+## Usage
 
 To run the app locally, use the following command:
 

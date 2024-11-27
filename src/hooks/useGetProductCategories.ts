@@ -1,4 +1,4 @@
-import { getProductById, getProductCategories } from "@/api";
+import { getProductCategories } from "@/api";
 import { useEffect, useState } from "react";
 
 export const useGetProductCategories = () => {
