@@ -31,13 +31,19 @@ export function FilterBar({
   handleFilterByCategory
 } : FilterBarProps) {
 
+  const [open, setOpen] = useState<boolean>(false);
   const [filterActive, setFilterActive] = useState<boolean>(false);
   const [category, setCategory] = useState<string>("");
-  const [values, setValues] = 
+  const [priceRanges, setPriceRanges] = 
     useState<number[]>([PRICE_RANGE.min, PRICE_RANGE.max]);
 
+  const handleFilterReset = () => {
+    setCategory("");
+    setPriceRanges([PRICE_RANGE.min, PRICE_RANGE.max]);
+  };
+
   const handleFilterActive = () => {
-    if(isEqual(values, [PRICE_RANGE.min, PRICE_RANGE.max]) 
+    if(isEqual(priceRanges, [PRICE_RANGE.min, PRICE_RANGE.max]) 
       && isEmpty(category)) 
     {
       setFilterActive(false);
@@ -47,16 +53,17 @@ export function FilterBar({
   };
 
   return (
-    <Popover>
+    <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
         <Button
           variant="outline"
+          onClick={() => setOpen(true)}
         >
           Filter
           {filterActive && <Dot color="red" strokeWidth={10} />}
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="flex flex-col gap-4 min-w-72">
+      <PopoverContent className="flex flex-col gap-4 w-screen sm:w-72">
         <Select 
           value={category}
           onValueChange={(value) => {
@@ -78,24 +85,33 @@ export function FilterBar({
           </SelectContent>
         </Select>
         <Slider 
-          defaultValue={values} 
-          onValueChange={(values) => {
-            setValues(values);
+          defaultValue={priceRanges}
+          value={priceRanges} 
+          onValueChange={(priceRanges) => {
+            setPriceRanges(priceRanges);
           }}
           min={PRICE_RANGE.min}
           max={PRICE_RANGE.max}
           step={0.1}
-          minStepsBetweenThumbs={50}
+          minStepsBetweenThumbs={20}
         />
-        <p>{PRICE_RANGE_LABEL} {values[0]} - {values[1]}{DEFAULT_CURRENCY}</p>
+        <p>{PRICE_RANGE_LABEL} {priceRanges[0]} - {priceRanges[1]}{DEFAULT_CURRENCY}</p>
         <Button 
-          type="submit" 
           onClick={() => {
-            handleFilterByCategory(category, values as [number, number]);
+            handleFilterByCategory(category, priceRanges as [number, number]);
             handleFilterActive();
+            setOpen(false);
           }}
         >
           Submit
+        </Button>
+        <Button
+          variant="secondary" 
+          onClick={() => {
+            handleFilterReset();
+          }}
+        >
+          Reset
         </Button>
       </PopoverContent>
     </Popover>
