@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Search, SearchIcon, X } from "lucide-react";
+import { SEARCH_CHARACTER_LIMIT } from "@/utils/constants";
 
 interface SearchBarProps {
   handleSearch: (searchTerm: string) => void;
@@ -14,6 +15,14 @@ export function SearchBar({
 } : SearchBarProps) {
 
   const [input, setInput] = useState<string>('');
+
+  const handleInput = (input: string) => {
+    if(input.length >= SEARCH_CHARACTER_LIMIT) {
+      setInput(input.slice(0, SEARCH_CHARACTER_LIMIT));
+      return;
+    }
+    setInput(input);
+  };
 
   return (
     <div 
@@ -31,7 +40,11 @@ export function SearchBar({
     >
       <Search />
       <Input 
-        onChange={(e) => setInput(e.target.value)}
+        onChange={(e) => handleInput(e.target.value)}
+        onKeyDown={(e) => {
+          if(!input.length || e.key !== "Enter") return;
+          handleSearch(input);
+        }}
         value={input}
         type="search" 
         placeholder="Enter product name..." 

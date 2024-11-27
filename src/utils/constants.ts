@@ -1,6 +1,7 @@
 /* eslint-disable max-len */
 export const DEFAULT_CURRENCY = "$";
 export const DESCRIPTION_CHARACTER_LIMIT = 100;
+export const SEARCH_CHARACTER_LIMIT = 30;
 export const DEFAULT_PAGINATION_LIMIT = 20;
 export const SORT_BY_OPTIONS = {
   PRICE: 'price',
