@@ -13,6 +13,7 @@ import {
   filterProductsByPriceRange, 
   filterProductsByTitle 
 } from '@/utils';
+import { PRICE_RANGE } from '@/utils/constants';
 
 export const authenticateUser = async(body : object) => {
   const response = await axiosInstance
@@ -55,8 +56,8 @@ export const getProductById = async(id : number) => {
 
 export const getProductsBySearch = async(queryParams : SearchQueryParams) => {
   const { 
-    searchTerm, 
-    limit, 
+    searchTerm,
+    skip, 
     sortBy,
     select,
     order, 
@@ -65,24 +66,31 @@ export const getProductsBySearch = async(queryParams : SearchQueryParams) => {
     maxPrice 
   } = queryParams;
 
+  let { limit } = queryParams;
+
+  if(searchTerm || category || minPrice !== PRICE_RANGE.min || maxPrice !== PRICE_RANGE.max) {
+    limit = 0;
+  }
+
   const queryUrl = 
-    `?q=${searchTerm}&limit=${limit}&sortBy=${sortBy}&order=${order}&select=${select}`;
+    `?q=${searchTerm}&limit=${limit}&skip=${skip}&sortBy=${sortBy}&order=${order}&select=${select}`;
 
   const response = await axiosInstance.get(PRODUCTS_SEARCH_URL + queryUrl);
 
   if(searchTerm) {
     response.data.products = filterProductsByTitle(response.data.products, searchTerm);
+    response.data.total = response.data.products.length;
   }
 
   if(category) {
     response.data.products = filterProductsByCategory(response.data.products, category);
+    response.data.total = response.data.products.length;
   }
 
-  if(minPrice && maxPrice) {
+  if(minPrice !== PRICE_RANGE.min || maxPrice !== PRICE_RANGE.max) {
     response.data.products = filterProductsByPriceRange(response.data.products, minPrice, maxPrice);
+    response.data.total = response.data.products.length;
   }
-
-  response.data.total = response.data.products.length;
 
   return response;
 };

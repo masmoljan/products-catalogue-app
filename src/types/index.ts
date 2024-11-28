@@ -52,12 +52,13 @@ export interface ProductMeta {
 }
 
 export interface QueryParams {
+  skip: number,
   limit: number,
   sortBy: string,
   order: string,
   category?: string,
-  minPrice?: number,
-  maxPrice?: number,
+  minPrice: number,
+  maxPrice: number,
   select?: string
 }
 

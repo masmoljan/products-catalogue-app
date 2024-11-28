@@ -90,8 +90,9 @@ export default function Dashboard() {
     total: number
   } = useGetProductsBySearch({ 
     searchTerm,
-    select: "title,description,price,thumbnail",
-    limit: 0, 
+    select: "title,description,price,thumbnail,category",
+    skip: startPage,
+    limit: endPage - startPage, 
     sortBy, 
     order,
     category: productCategory,
@@ -141,18 +142,17 @@ export default function Dashboard() {
         { isProductsSearchLoading ? 
           <SkeletonCard skeletonAmout={endPage}/>
         :
-          productsSearch?.products.slice(startPage, endPage)
-            .map((product : Product) => (
-              <ProductCard
-                key={product.id} 
-                id={product.id}
-                title={product.title}
-                description={<CardDescription description={product.description}/>}
-                price={product.price}
-                thumbnail={product.thumbnail}
-                toggleShowDetails={toggleShowDetails}
-                setProductId={setSelectedProductId}
-              />
+          productsSearch?.products.map((product : Product) => (
+            <ProductCard
+              key={product.id} 
+              id={product.id}
+              title={product.title}
+              description={<CardDescription description={product.description}/>}
+              price={product.price}
+              thumbnail={product.thumbnail}
+              toggleShowDetails={toggleShowDetails}
+              setProductId={setSelectedProductId}
+            />
             )
           )}
       </div>
