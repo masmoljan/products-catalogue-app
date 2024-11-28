@@ -9,7 +9,6 @@ export const useGetProduct = (id : number) => {
   const [error, setError] = useState<string>("");
 
   useEffect(() => {
-    setData(undefined);
     if(!id) return;
 
     getProductById(id)

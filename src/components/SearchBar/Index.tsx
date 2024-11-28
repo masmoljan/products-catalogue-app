@@ -3,6 +3,8 @@ import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Search, SearchIcon, X } from "lucide-react";
 import { SEARCH_CHARACTER_LIMIT } from "@/utils/constants";
+import { ProductSearchSchema } from "@/validation/searchProduct";
+import { toast } from "sonner";
 
 interface SearchBarProps {
   handleSearch: (searchTerm: string) => void;
@@ -27,6 +29,15 @@ export function SearchBar({
   };
 
   const handleSubmit = (input: string) => {
+    const validate = ProductSearchSchema.safeParse(input);
+
+    if(!validate.success) {
+      validate.error.issues.map((issue) => 
+        toast.error(issue.message)
+      );
+      return;
+    }
+
     if(input === previousInput) return;
     setPreviousInput(input);
     handleSearch(input);
@@ -44,6 +55,7 @@ export function SearchBar({
         px-2.5 
         py-1.5 
         space-x-3
+        shadow-inner
       "
     >
       <Search />

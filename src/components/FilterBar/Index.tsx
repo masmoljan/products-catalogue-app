@@ -20,6 +20,9 @@ import {
 } from "@/utils/constants";
 import { isEmpty, isEqual } from "lodash";
 import { Dot } from "lucide-react";
+import { ProductCategorySchema, ProductFilterSchema } from "@/validation/product";
+import { toast } from "sonner";
+
 
 interface FilterBarProps {
   categories?: Array<string>,
@@ -35,7 +38,7 @@ export function FilterBar({
   const [filterActive, setFilterActive] = useState<boolean>(false);
   const [category, setCategory] = useState<string>("");
   const [priceRanges, setPriceRanges] = 
-    useState<number[]>([PRICE_RANGE.min, PRICE_RANGE.max]);
+    useState<number[]>([-1, PRICE_RANGE.max]);
 
   const handleFilterReset = () => {
     setCategory("");
@@ -50,6 +53,28 @@ export function FilterBar({
       return;
     }
     setFilterActive(true);
+  };
+
+  const handleFilterSubmit = () => {
+    const validatePriceRanges = ProductFilterSchema.safeParse(priceRanges);
+    const validateCategory = ProductCategorySchema.safeParse(category);
+
+    if(!validatePriceRanges.success) {
+      validatePriceRanges.error?.issues.map((issue) => 
+        toast.error(issue.message)
+      );
+      return;
+    }
+
+    if(!validateCategory.success) {
+      validateCategory.error?.issues.map((issue) => 
+        toast.error(issue.message)
+      );
+    }
+
+    handleFilterByCategory(category, priceRanges as [number, number]);
+    handleFilterActive();
+    setOpen(false);
   };
 
   return (
@@ -97,11 +122,7 @@ export function FilterBar({
         />
         <p>{PRICE_RANGE_LABEL} {priceRanges[0]} - {priceRanges[1]}{DEFAULT_CURRENCY}</p>
         <Button 
-          onClick={() => {
-            handleFilterByCategory(category, priceRanges as [number, number]);
-            handleFilterActive();
-            setOpen(false);
-          }}
+          onClick={() => {handleFilterSubmit();}}
         >
           Submit
         </Button>

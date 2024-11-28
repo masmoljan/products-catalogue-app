@@ -28,7 +28,6 @@ import { ProductDetailsTable } from "./DetailsTable";
 import ProductReviewCard from "./ReviewCard";
 import { ScrollArea } from "../ui/scroll-area";
 
-
 interface ProductDetailsProps {
   product: Product
   open: boolean,
@@ -63,7 +62,7 @@ export function ProductDetails ({
                 <img className="h-full w-full object-contain" src={image} />
               </CarouselItem>
             ))}
-            {!product.images.length &&
+            {!product?.images.length &&
               <CarouselItem >
                 <Image className="h-full w-full object-contain" />
               </CarouselItem>
@@ -78,13 +77,16 @@ export function ProductDetails ({
           }
         </Carousel>
         <DialogHeader>
-          {isProductLoading &&
-            <Skeleton className="h-16 w-full"/>
+          {isProductLoading ?
+            <Skeleton className="h-28 w-full"/>
+          :
+          <>
+            <DialogTitle>{product?.title}</DialogTitle>
+            <DialogDescription className="text-justify min-h-[60px]">
+              {product?.description}
+            </DialogDescription>
+          </>
           }
-          <DialogTitle>{product?.title}</DialogTitle>
-          <DialogDescription className="text-justify">
-            {product?.description}
-          </DialogDescription>
         </DialogHeader>
         <div className="flex flex-col space-y-2 items-center">
           {isProductLoading ? 
@@ -100,12 +102,12 @@ export function ProductDetails ({
                   <TabsTrigger className="w-full" value="reviews">Reviews</TabsTrigger>
                 </TabsList>
                 <TabsContent title="product-tabs-content" value="details" className="w-full">
-                  <ProductDetailsTable product={product}/>
+                  {product && <ProductDetailsTable product={product}/>}
                 </TabsContent>
                 <TabsContent value="reviews" className="w-full">
                   <ScrollArea className="max-h-32 flex flex-col">
                   {
-                    product.reviews.map((review, index) => (
+                    product?.reviews.map((review, index) => (
                       <ProductReviewCard
                         key={index}
                         comment={review.comment}
