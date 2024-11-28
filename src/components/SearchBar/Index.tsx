@@ -15,6 +15,7 @@ export function SearchBar({
 } : SearchBarProps) {
 
   const [input, setInput] = useState<string>('');
+  const [previousInput, setPreviousInput] = useState('');
   const searchRef = useRef<HTMLInputElement | null>(null);
 
   const handleInput = (input: string) => {
@@ -23,6 +24,12 @@ export function SearchBar({
       return;
     }
     setInput(input);
+  };
+
+  const handleSubmit = (input: string) => {
+    if(input === previousInput) return;
+    setPreviousInput(input);
+    handleSearch(input);
   };
 
   return (
@@ -43,8 +50,8 @@ export function SearchBar({
       <Input 
         onChange={(e) => handleInput(e.target.value)}
         onKeyDown={(e) => {
-          if(!input.length || e.key !== "Enter" || searchRef?.current?.value === input) return;
-          handleSearch(input);
+          if(!input.length || e.key !== "Enter") return;
+          handleSubmit(input);
         }}
         ref={searchRef}
         value={input}
@@ -55,7 +62,7 @@ export function SearchBar({
       <Button 
         type="submit"
         disabled={!input.length}
-        onClick={() => handleSearch(input)}
+        onClick={() => handleSubmit(input)}
       >
         <p className="hidden sm:block">Search</p>
         <SearchIcon className="sm:hidden"/>
