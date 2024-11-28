@@ -47,7 +47,7 @@ export interface ProductReview {
 export interface ProductMeta {
   createdAt: string,
   updatedAt: string,
-  barcode: number,
+  barcode: string,
   qrCode: string
 }
 
@@ -57,7 +57,8 @@ export interface QueryParams {
   order: string,
   category?: string,
   minPrice?: number,
-  maxPrice?: number
+  maxPrice?: number,
+  select?: string
 }
 
 export interface SearchQueryParams extends QueryParams {

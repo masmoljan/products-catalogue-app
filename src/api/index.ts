@@ -57,14 +57,16 @@ export const getProductsBySearch = async(queryParams : SearchQueryParams) => {
   const { 
     searchTerm, 
     limit, 
-    sortBy, 
+    sortBy,
+    select,
     order, 
     category, 
     minPrice, 
     maxPrice 
   } = queryParams;
 
-  const queryUrl = `?q=${searchTerm}&limit=${limit}&sortBy=${sortBy}&order=${order}`;
+  const queryUrl = 
+    `?q=${searchTerm}&limit=${limit}&sortBy=${sortBy}&order=${order}&select=${select}`;
 
   const response = await axiosInstance.get(PRODUCTS_SEARCH_URL + queryUrl);
 

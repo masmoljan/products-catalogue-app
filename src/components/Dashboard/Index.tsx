@@ -1,9 +1,9 @@
 import { Data, Product } from "@/types";
 import { useRef, useState } from "react";
-import ProductCard from "../Product/Card";
-import { CardDescription } from "../Product/CardDescription";
-import { DEFAULT_PAGINATION_LIMIT, PRICE_RANGE } from "@/utils/constants";
-import ProductDetails from "../Product/Details";
+import { ProductCard } from "../Product/Card";
+import { CardDescription } from "@/components/Product/CardDescription";
+import { DEFAULT_PAGINATION_LIMIT, NO_PRODUCTS_FOUND, PRICE_RANGE } from "@/utils/constants";
+import { ProductDetails } from "../Product/Details";
 import { useGetProduct } from "@/hooks/useGetProduct";
 import { useGetProductsBySearch } from "@/hooks/useGetProductsBySearch";
 import { useGetProductCategories } from "@/hooks/useGetProductCategories";
@@ -12,10 +12,9 @@ import { FilterBar } from "@/components/FilterBar/Index";
 import { SortBar } from "@/components/SortBar";
 import { SkeletonCard } from "@/components/Skeleton/Card";
 import { BasicPagination } from "@/components/Pagination/Index";
-import { Error } from "../Error/Index";
+import { Error } from "@/components/Error/Index";
+import { SkeletonFilter } from "@/components/Skeleton/Filter";
 import { throttle } from "lodash";
-import { SkeletonFilter } from "../Skeleton/Filter";
-
 
 export default function Dashboard() {
   const [sortBy, setSortBy] = useState("");
@@ -87,10 +86,11 @@ export default function Dashboard() {
   } : {
     data: Data | undefined,
     isLoading: boolean | undefined, 
-    error: string | undefined,
+    error: string,
     total: number
   } = useGetProductsBySearch({ 
-    searchTerm, 
+    searchTerm,
+    select: "title,description,price,thumbnail",
     limit: 0, 
     sortBy, 
     order,
@@ -136,14 +136,7 @@ export default function Dashboard() {
         }
       </div>
       <div 
-        className="
-          grid 
-          grid-cols-1 
-          sm:grid-cols-2 
-          lg:grid-cols-3 
-          gap-4 
-          p-4
-        "
+        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 p-4"
       >
         { isProductsSearchLoading ? 
           <SkeletonCard skeletonAmout={endPage}/>
@@ -165,7 +158,7 @@ export default function Dashboard() {
       </div>
       {!productsSearchCount && (
         <div className="min-h-screen text-center">
-          <p>No products found. Please change your search criteria.</p>
+          <p>{NO_PRODUCTS_FOUND}</p>
         </div>
       )}
       {showProductDetails && product &&
