@@ -4,11 +4,12 @@ import { useEffect, useState } from "react";
 
 export const useGetProduct = (id : number) => {
 
-  const [data, setData] = useState<Product>();
+  const [data, setData] = useState<Product | undefined>(undefined);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>("");
 
   useEffect(() => {
+    setData(undefined);
     if(!id) return;
 
     getProductById(id)

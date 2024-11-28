@@ -74,7 +74,7 @@ export default function Dashboard() {
     error: ProductError 
   } : {
     data: Product | undefined
-    isLoading: boolean | undefined, 
+    isLoading: boolean, 
     error: string
   } = useGetProduct(selectedProductId);
 
