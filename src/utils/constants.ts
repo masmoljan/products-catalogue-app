@@ -17,5 +17,6 @@ export const PRICE_RANGE = {
   max: 40000
 };
 export const PAGINATION_OPTIONS = [20, 30, 50];
+export const NO_PRODUCTS_FOUND = "No products found. Please change your search criteria.";
 export const ERROR_MESSAGE = "We apologize for the inconvenience. Please try again later, as we are experiencing an issue on our end.";
 export const ERROR_MESSAGE_REFERENCE = "Reference: ";

@@ -1,9 +1,9 @@
-import { Data, Product } from "@/types";
 import { useRef, useState } from "react";
-import { ProductCard } from "../Product/Card";
+import { Data, Product } from "@/types";
+import { ProductCard } from "@/components/Product/Card";
 import { CardDescription } from "@/components/Product/CardDescription";
 import { DEFAULT_PAGINATION_LIMIT, NO_PRODUCTS_FOUND, PRICE_RANGE } from "@/utils/constants";
-import { ProductDetails } from "../Product/Details";
+import { ProductDetails } from "@/components/Product/Details";
 import { useGetProduct } from "@/hooks/useGetProduct";
 import { useGetProductsBySearch } from "@/hooks/useGetProductsBySearch";
 import { useGetProductCategories } from "@/hooks/useGetProductCategories";
