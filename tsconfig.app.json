@@ -27,8 +27,10 @@
       "@/*": [
         "./src/*"
       ]
-    }
+    },
+    "types": ["vitest/globals"]
+
 
   },
-  "include": ["src"]
+  "include": ["src", "__tests__"]
 }

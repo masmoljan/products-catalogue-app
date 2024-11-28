@@ -1,0 +1,248 @@
+{
+  "products": [
+    {
+      "id": 194,
+      "title": "Women's Wrist Watch",
+      "description": "The Women's Wrist Watch is a versatile and fashionable timepiece for everyday wear. With a comfortable strap and a simple yet elegant design, it complements various styles.",
+      "category": "womens-watches",
+      "price": 129.99,
+      "discountPercentage": 17.34,
+      "rating": 2.93,
+      "stock": 55,
+      "tags": [
+        "watches",
+        "women's watches"
+      ],
+      "brand": "Fashion Co.",
+      "sku": "36T6X4M3",
+      "weight": 8,
+      "dimensions": {
+        "width": 24.74,
+        "height": 25.89,
+        "depth": 8.18
+      },
+      "warrantyInformation": "1 month warranty",
+      "shippingInformation": "Ships in 3-5 business days",
+      "availabilityStatus": "In Stock",
+      "reviews": [
+        {
+          "rating": 4,
+          "comment": "Fast shipping!",
+          "date": "2024-05-23T08:56:21.628Z",
+          "reviewerName": "Emily Brown",
+          "reviewerEmail": "emily.brown@x.dummyjson.com"
+        },
+        {
+          "rating": 5,
+          "comment": "Great product!",
+          "date": "2024-05-23T08:56:21.628Z",
+          "reviewerName": "Liam Smith",
+          "reviewerEmail": "liam.smith@x.dummyjson.com"
+        },
+        {
+          "rating": 3,
+          "comment": "Waste of money!",
+          "date": "2024-05-23T08:56:21.628Z",
+          "reviewerName": "Mila Hernandez",
+          "reviewerEmail": "mila.hernandez@x.dummyjson.com"
+        }
+      ],
+      "returnPolicy": "90 days return policy",
+      "minimumOrderQuantity": 1,
+      "meta": {
+        "createdAt": "2024-05-23T08:56:21.628Z",
+        "updatedAt": "2024-05-23T08:56:21.628Z",
+        "barcode": "7588684177028",
+        "qrCode": "https://assets.dummyjson.com/public/qr-code.png"
+      },
+      "images": [
+        "https://cdn.dummyjson.com/products/images/womens-watches/Women's%20Wrist%20Watch/1.png",
+        "https://cdn.dummyjson.com/products/images/womens-watches/Women's%20Wrist%20Watch/2.png",
+        "https://cdn.dummyjson.com/products/images/womens-watches/Women's%20Wrist%20Watch/3.png"
+      ],
+      "thumbnail": "https://cdn.dummyjson.com/products/images/womens-watches/Women's%20Wrist%20Watch/thumbnail.png"
+    },
+    {
+      "id": 176,
+      "title": "Women Handbag Black",
+      "description": "The Women Handbag in Black is a classic and versatile accessory that complements various outfits. With a timeless black color and functional design, it's a must-have in every woman's wardrobe.",
+      "category": "womens-bags",
+      "price": 59.99,
+      "discountPercentage": 3.08,
+      "rating": 4.94,
+      "stock": 24,
+      "tags": [
+        "fashion accessories",
+        "handbags"
+      ],
+      "brand": "Elegance Collection",
+      "sku": "0I2M70SW",
+      "weight": 1,
+      "dimensions": {
+        "width": 15.31,
+        "height": 26.35,
+        "depth": 24.69
+      },
+      "warrantyInformation": "Lifetime warranty",
+      "shippingInformation": "Ships overnight",
+      "availabilityStatus": "In Stock",
+      "reviews": [
+        {
+          "rating": 1,
+          "comment": "Not as described!",
+          "date": "2024-05-23T08:56:21.627Z",
+          "reviewerName": "Leah Hughes",
+          "reviewerEmail": "leah.hughes@x.dummyjson.com"
+        },
+        {
+          "rating": 4,
+          "comment": "Very pleased!",
+          "date": "2024-05-23T08:56:21.627Z",
+          "reviewerName": "Lila Hudson",
+          "reviewerEmail": "lila.hudson@x.dummyjson.com"
+        },
+        {
+          "rating": 5,
+          "comment": "Awesome product!",
+          "date": "2024-05-23T08:56:21.627Z",
+          "reviewerName": "Ethan Martinez",
+          "reviewerEmail": "ethan.martinez@x.dummyjson.com"
+        }
+      ],
+      "returnPolicy": "No return policy",
+      "minimumOrderQuantity": 8,
+      "meta": {
+        "createdAt": "2024-05-23T08:56:21.627Z",
+        "updatedAt": "2024-05-23T08:56:21.627Z",
+        "barcode": "4391376510493",
+        "qrCode": "https://assets.dummyjson.com/public/qr-code.png"
+      },
+      "images": [
+        "https://cdn.dummyjson.com/products/images/womens-bags/Women%20Handbag%20Black/1.png",
+        "https://cdn.dummyjson.com/products/images/womens-bags/Women%20Handbag%20Black/2.png",
+        "https://cdn.dummyjson.com/products/images/womens-bags/Women%20Handbag%20Black/3.png"
+      ],
+      "thumbnail": "https://cdn.dummyjson.com/products/images/womens-bags/Women%20Handbag%20Black/thumbnail.png"
+    },
+    {
+      "id": 175,
+      "title": "White Faux Leather Backpack",
+      "description": "The White Faux Leather Backpack is a trendy and practical backpack for the modern woman. With a sleek white design and ample storage space, it's perfect for both casual and on-the-go styles.",
+      "category": "womens-bags",
+      "price": 39.99,
+      "discountPercentage": 7.76,
+      "rating": 4.91,
+      "stock": 89,
+      "tags": [
+        "fashion accessories",
+        "backpacks"
+      ],
+      "brand": "Urban Chic",
+      "sku": "85TOBG0M",
+      "weight": 1,
+      "dimensions": {
+        "width": 9.35,
+        "height": 22.43,
+        "depth": 15.63
+      },
+      "warrantyInformation": "1 month warranty",
+      "shippingInformation": "Ships overnight",
+      "availabilityStatus": "In Stock",
+      "reviews": [
+        {
+          "rating": 1,
+          "comment": "Would not recommend!",
+          "date": "2024-05-23T08:56:21.627Z",
+          "reviewerName": "Harper Kelly",
+          "reviewerEmail": "harper.kelly@x.dummyjson.com"
+        },
+        {
+          "rating": 5,
+          "comment": "Excellent quality!",
+          "date": "2024-05-23T08:56:21.627Z",
+          "reviewerName": "Sofia Mitchell",
+          "reviewerEmail": "sofia.mitchell@x.dummyjson.com"
+        },
+        {
+          "rating": 5,
+          "comment": "Very pleased!",
+          "date": "2024-05-23T08:56:21.627Z",
+          "reviewerName": "Eli Bennett",
+          "reviewerEmail": "eli.bennett@x.dummyjson.com"
+        }
+      ],
+      "returnPolicy": "30 days return policy",
+      "minimumOrderQuantity": 16,
+      "meta": {
+        "createdAt": "2024-05-23T08:56:21.627Z",
+        "updatedAt": "2024-05-23T08:56:21.627Z",
+        "barcode": "2451119128549",
+        "qrCode": "https://assets.dummyjson.com/public/qr-code.png"
+      },
+      "images": [
+        "https://cdn.dummyjson.com/products/images/womens-bags/White%20Faux%20Leather%20Backpack/1.png",
+        "https://cdn.dummyjson.com/products/images/womens-bags/White%20Faux%20Leather%20Backpack/2.png",
+        "https://cdn.dummyjson.com/products/images/womens-bags/White%20Faux%20Leather%20Backpack/3.png"
+      ],
+      "thumbnail": "https://cdn.dummyjson.com/products/images/womens-bags/White%20Faux%20Leather%20Backpack/thumbnail.png"
+    },
+    {
+      "id": 42,
+      "title": "Water",
+      "description": "Pure and refreshing bottled water, essential for staying hydrated throughout the day.",
+      "category": "groceries",
+      "price": 0.99,
+      "discountPercentage": 13.71,
+      "rating": 2.93,
+      "stock": 95,
+      "tags": [
+        "beverages"
+      ],
+      "sku": "LZG5PPHA",
+      "weight": 2,
+      "dimensions": {
+        "width": 25.46,
+        "height": 25.86,
+        "depth": 18.06
+      },
+      "warrantyInformation": "No warranty",
+      "shippingInformation": "Ships in 1 week",
+      "availabilityStatus": "In Stock",
+      "reviews": [
+        {
+          "rating": 4,
+          "comment": "Highly recommended!",
+          "date": "2024-05-23T08:56:21.621Z",
+          "reviewerName": "Lillian Simmons",
+          "reviewerEmail": "lillian.simmons@x.dummyjson.com"
+        },
+        {
+          "rating": 4,
+          "comment": "Great product!",
+          "date": "2024-05-23T08:56:21.621Z",
+          "reviewerName": "Emily Brown",
+          "reviewerEmail": "emily.brown@x.dummyjson.com"
+        },
+        {
+          "rating": 5,
+          "comment": "Great value for money!",
+          "date": "2024-05-23T08:56:21.621Z",
+          "reviewerName": "Cameron Perez",
+          "reviewerEmail": "cameron.perez@x.dummyjson.com"
+        }
+      ],
+      "returnPolicy": "7 days return policy",
+      "minimumOrderQuantity": 46,
+      "meta": {
+        "createdAt": "2024-05-23T08:56:21.621Z",
+        "updatedAt": "2024-05-23T08:56:21.621Z",
+        "barcode": "7625896901250",
+        "qrCode": "https://assets.dummyjson.com/public/qr-code.png"
+      },
+      "images": [
+        "https://cdn.dummyjson.com/products/images/groceries/Water/1.png"
+      ],
+      "thumbnail": "https://cdn.dummyjson.com/products/images/groceries/Water/thumbnail.png"
+    }
+  ]
+}
