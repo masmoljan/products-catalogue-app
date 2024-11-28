@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Search, SearchIcon, X } from "lucide-react";
@@ -15,6 +15,7 @@ export function SearchBar({
 } : SearchBarProps) {
 
   const [input, setInput] = useState<string>('');
+  const searchRef = useRef<HTMLInputElement | null>(null);
 
   const handleInput = (input: string) => {
     if(input.length >= SEARCH_CHARACTER_LIMIT) {
@@ -42,9 +43,10 @@ export function SearchBar({
       <Input 
         onChange={(e) => handleInput(e.target.value)}
         onKeyDown={(e) => {
-          if(!input.length || e.key !== "Enter") return;
+          if(!input.length || e.key !== "Enter" || searchRef?.current?.value === input) return;
           handleSearch(input);
         }}
+        ref={searchRef}
         value={input}
         type="search" 
         placeholder="Enter product name..." 

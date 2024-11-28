@@ -1,5 +1,9 @@
 import { Product } from "@/types";
 
+export function truncate(input: string, limit: number)  {
+  return input.slice(0, limit);
+}
+
 export function filterProductsByTitle (products : Array<Product>, filterBy : string) {
   return products.filter((product : Product) => 
     product.title.toLowerCase().includes(filterBy.toLowerCase())
