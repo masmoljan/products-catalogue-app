@@ -1,5 +1,6 @@
 import { Product } from "@/types";
 import { DESCRIPTION_CHARACTER_LIMIT } from "@/utils/constants";
+import { truncate } from "@/utils/index";
 
 export function CardDescription ({ 
   description 
@@ -8,8 +9,8 @@ export function CardDescription ({
   const shouldTruncate = description.length > DESCRIPTION_CHARACTER_LIMIT;
 
   if (!shouldTruncate) return description;
-  
-  return description
-    .slice(0, DESCRIPTION_CHARACTER_LIMIT)
-    .concat('...');
+
+  description = truncate(description, DESCRIPTION_CHARACTER_LIMIT).concat("...");
+
+  return description;
 }

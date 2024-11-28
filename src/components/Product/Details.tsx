@@ -23,7 +23,10 @@ import {
 
 import { Skeleton } from "../ui/skeleton";
 import { Error } from "../Error/Index";
-import { DEFAULT_CURRENCY } from "@/utils/constants";
+import { Image } from "lucide-react";
+import { ProductDetailsTable } from "./DetailsTable";
+import ProductReviewCard from "./ReviewCard";
+import { ScrollArea } from "../ui/scroll-area";
 
 
 interface ProductDetailsProps {
@@ -34,7 +37,7 @@ interface ProductDetailsProps {
   productError: string
 }
 
-export default function ProductDetails ({
+export function ProductDetails ({
   product,
   open,
   toggleShowDetails,
@@ -50,7 +53,7 @@ export default function ProductDetails ({
 
   return (
     <Dialog open={open} onOpenChange={toggleShowDetails}>
-      <DialogContent>
+      <DialogContent className="max-h-screen">
         <Carousel className="flex justify-self-center">
           {isProductLoading ? <Skeleton className="h-64 w-64" />
           :          
@@ -60,6 +63,11 @@ export default function ProductDetails ({
                 <img className="h-full w-full object-contain" src={image} />
               </CarouselItem>
             ))}
+            {!product.images.length &&
+              <CarouselItem >
+                <Image className="h-full w-full object-contain" />
+              </CarouselItem>
+            }
           </CarouselContent>
           }
           {product?.images?.length > 1 && 
@@ -83,31 +91,30 @@ export default function ProductDetails ({
             <Skeleton className="h-28 w-full" />
           :
             <>
-              <Tabs defaultValue="details" className="w-full flex flex-col items-center">
-                <TabsList className="min-w-full">
+              <Tabs 
+                title="product-tabs"
+                defaultValue="details" 
+                className="w-full flex flex-col items-center">
+                <TabsList title="tabs-list" className="min-w-full">
                   <TabsTrigger className="w-full" value="details">Details</TabsTrigger>
                   <TabsTrigger className="w-full" value="reviews">Reviews</TabsTrigger>
                 </TabsList>
-                <TabsContent value="details" className="w-full">
-                  <p className="w-fit inline">
-                    Price: {product?.price}{DEFAULT_CURRENCY}
-                  </p>
-                  <p className="w-fit inline bg-rose-300 rounded-md ml-1 p-0.5">
-                    -{product.discountPercentage}%
-                  </p>
-                  <p>Availability: {product?.availabilityStatus}</p>
-                  <p className="capitalize">Category: {product?.category}</p>
-                  <p className="capitalize">Brand: {product?.brand}</p>
+                <TabsContent title="product-tabs-content" value="details" className="w-full">
+                  <ProductDetailsTable product={product}/>
                 </TabsContent>
                 <TabsContent value="reviews" className="w-full">
+                  <ScrollArea className="max-h-32 flex flex-col">
                   {
                     product.reviews.map((review, index) => (
-                      <div key={index}>
-                        <p>{review.reviewerName}</p>
-                        <p>{review.comment}</p>
-                      </div>
+                      <ProductReviewCard
+                        key={index}
+                        comment={review.comment}
+                        reviewerName={review.reviewerName}
+                        rating={review.rating}
+                      />
                     ))
                   }
+                  </ScrollArea>
                 </TabsContent>
               </Tabs>
             </>

@@ -48,7 +48,7 @@ export default function Dashboard() {
     setMinPrice(priceRange[0]);
     setMaxPrice(priceRange[1]);
     setstartPage(0);
-    setendPage(DEFAULT_PAGINATION_LIMIT);
+    setendPage(endPage - startPage);
   };
 
   const handleSort = (options: string) => {

@@ -11,6 +11,9 @@ Using this app, the user should be able to:
   - Sort products by title and price (ascending/descending order)
   - Filter products by category and price
 
+## Live demo
+[Vercel](https://products-catalogue-app.vercel.app/)
+
 ## Installation
 
 To install and use this app locally follow just run:
