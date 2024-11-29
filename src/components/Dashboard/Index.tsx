@@ -61,6 +61,10 @@ export default function Dashboard() {
   const handlePagination = (start: number, end: number) => {
     setstartPage(start);
     setendPage(end);
+    window.scroll(({
+      top: 0,
+      behavior: 'smooth'
+    }));
   };
 
   const throttleHandlePagination = useRef(throttle(handlePagination, 500));
