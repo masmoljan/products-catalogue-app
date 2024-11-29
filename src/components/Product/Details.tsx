@@ -126,7 +126,7 @@ export function ProductDetails ({
                   <TabsTrigger className="w-full" value="details">Details</TabsTrigger>
                   <TabsTrigger className="w-full" value="reviews">Reviews</TabsTrigger>
                 </TabsList>
-                <TabsContent title="product-tabs-content" value="details" className="w-full">
+                <TabsContent value="details" className="w-full">
                   {product && <ProductDetailsTable product={product}/>}
                 </TabsContent>
                 <TabsContent value="reviews" className="w-full">
