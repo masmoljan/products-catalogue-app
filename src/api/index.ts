@@ -57,7 +57,6 @@ export const getProductById = async(id : number) => {
 export const getProductsBySearch = async(queryParams : SearchQueryParams) => {
   const { 
     searchTerm,
-    skip, 
     sortBy,
     select,
     order, 
@@ -66,10 +65,14 @@ export const getProductsBySearch = async(queryParams : SearchQueryParams) => {
     maxPrice 
   } = queryParams;
 
-  let { limit } = queryParams;
+  let { limit, skip } = queryParams;
+
+  const customFilterLimit = limit + skip;
+  const customFilterSkip = skip;
 
   if(searchTerm || category || minPrice !== PRICE_RANGE.min || maxPrice !== PRICE_RANGE.max) {
     limit = 0;
+    skip = 0;
   }
 
   const queryUrl = 
@@ -80,16 +83,19 @@ export const getProductsBySearch = async(queryParams : SearchQueryParams) => {
   if(searchTerm) {
     response.data.products = filterProductsByTitle(response.data.products, searchTerm);
     response.data.total = response.data.products.length;
+    response.data.products = response.data.products.slice(customFilterSkip, customFilterLimit);
   }
 
   if(category) {
     response.data.products = filterProductsByCategory(response.data.products, category);
     response.data.total = response.data.products.length;
+    response.data.products = response.data.products.slice(customFilterSkip, customFilterLimit);
   }
 
   if(minPrice !== PRICE_RANGE.min || maxPrice !== PRICE_RANGE.max) {
     response.data.products = filterProductsByPriceRange(response.data.products, minPrice, maxPrice);
     response.data.total = response.data.products.length;
+    response.data.products = response.data.products.slice(customFilterSkip, customFilterLimit);
   }
 
   return response;
