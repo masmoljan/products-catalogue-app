@@ -37,8 +37,6 @@ describe('renders a product card', () => {
     const setShowDetailsMock = vitest.fn();
     const useShowDetailsMock = (showDetailsMock : boolean) => [showDetailsMock, setShowDetailsMock];
 
-    const setSelectedProductIdMock = vitest.fn();
-
     const toggleShowDetailsMock = () => {
       setShowDetailsMock(!useShowDetailsMock);
     };
@@ -52,7 +50,6 @@ describe('renders a product card', () => {
         price={product.price}
         thumbnail={product.thumbnail}
         toggleShowDetails={toggleShowDetailsMock}
-        setProductId={setSelectedProductIdMock}
       />
     );
 
