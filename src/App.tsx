@@ -5,7 +5,7 @@ import Navigation from '@/components/Navigation/Index';
 function App() {
 
   return (
-    <div className='min-h-dvh min-w-full bg-stone-50'>
+    <div className='min-h-dvh bg-stone-50'>
       <Navigation />
       <Dashboard />
     </div>

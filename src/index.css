@@ -21,6 +21,10 @@ body {
   margin: 0;
 }
 
+html {
+  scroll-behavior: smooth !important;
+  background-color: rgb(250 250 249 / var(--tw-bg-opacity, 1)) !important;
+}
 
 @layer base {
   :root {

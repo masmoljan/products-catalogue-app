@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Data, Product } from "@/types";
 import { ProductCard } from "@/components/Product/Card";
 import { CardDescription } from "@/components/Product/CardDescription";
@@ -14,6 +14,7 @@ import { BasicPagination } from "@/components/Pagination/Index";
 import { Error } from "@/components/Error/Index";
 import { SkeletonFilter } from "@/components/Skeleton/Filter";
 import { throttle } from "lodash";
+import { scrollToTop } from "@/utils";
 
 export default function Dashboard() {
   const [sortBy, setSortBy] = useState("");
@@ -61,10 +62,6 @@ export default function Dashboard() {
   const handlePagination = (start: number, end: number) => {
     setstartPage(start);
     setendPage(end);
-    window.scroll(({
-      top: 0,
-      behavior: 'smooth'
-    }));
   };
 
   const throttleHandlePagination = useRef(throttle(handlePagination, 500));
@@ -73,6 +70,10 @@ export default function Dashboard() {
     setstartPage(0);
     setendPage(total);
   };
+
+  useEffect(() => {
+    scrollToTop();
+  }, [startPage]);
 
 
   const { 

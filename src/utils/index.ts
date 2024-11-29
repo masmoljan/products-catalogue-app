@@ -1,6 +1,10 @@
 import { Product } from "@/types";
 
-export function truncate(input: string, limit: number)  {
+export function scrollToTop () {
+  window.scroll(0, 0);
+}
+
+export function truncate(input: string, limit: number) {
   return input.slice(0, limit);
 }
 
