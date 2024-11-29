@@ -16,8 +16,7 @@ interface ProductCardProps {
   description: React.ReactElement,
   price: number,
   thumbnail?: string,
-  toggleShowDetails?: () => void,
-  setProductId?: (id : number) => void
+  toggleShowDetails?: (id: number) => void,
 }
 
 export function ProductCard ({
@@ -27,7 +26,6 @@ export function ProductCard ({
 	price,
   thumbnail,
   toggleShowDetails,
-  setProductId
 } : ProductCardProps ) {
 
   return (
@@ -50,13 +48,12 @@ export function ProductCard ({
       </CardHeader>
       <CardContent className="flex items-center justify-around pt-6 bg-slate-100">
         <p title="product-price">{price + DEFAULT_CURRENCY}</p>
-        {toggleShowDetails && setProductId &&
+        {toggleShowDetails &&
           <Button
             title="product-details-button" 
             type="button"
             onClick={() => {
-              toggleShowDetails();
-              setProductId(id);
+              toggleShowDetails(id);
             }}
           >
             Details

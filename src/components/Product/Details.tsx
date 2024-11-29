@@ -28,22 +28,29 @@ import { ProductDetailsTable } from "./DetailsTable";
 import ProductReviewCard from "./ReviewCard";
 import { ScrollArea } from "../ui/scroll-area";
 import { useState } from "react";
+import { useGetProduct } from "@/hooks/useGetProduct";
 
 interface ProductDetailsProps {
-  product: Product
   open: boolean,
-  toggleShowDetails: () => void,
-  isProductLoading: boolean,
-  productError: string
+  toggleShowDetails: (id?: number) => void,
+  productId: number
 }
 
 export function ProductDetails ({
-  product,
   open,
   toggleShowDetails,
-  isProductLoading,
-  productError
+  productId
 } : ProductDetailsProps) {
+
+  const { 
+    data: product, 
+    isLoading: isProductLoading, 
+    error: ProductError 
+  } : {
+    data: Product | undefined
+    isLoading: boolean, 
+    error: string
+  } = useGetProduct(productId);
 
   const [imageLoaded, setImageLoaded] = useState<boolean>(false);
 
@@ -51,14 +58,14 @@ export function ProductDetails ({
     setImageLoaded(true);
   };
 
-  if(productError) {
+  if(ProductError) {
     return (
-      <Error errorMessage={productError} />
+      <Error errorMessage={ProductError} />
     );
   }
 
   return (
-    <Dialog open={open} onOpenChange={toggleShowDetails}>
+    <Dialog open={open} onOpenChange={() => toggleShowDetails()}>
       <DialogContent className="max-h-screen">
         <Carousel className="flex justify-self-center">
           {isProductLoading ? <Skeleton className="h-64 w-64" />
@@ -81,7 +88,7 @@ export function ProductDetails ({
             }
           </CarouselContent>
           }
-          {product?.images?.length > 1 && 
+          {product && product?.images?.length > 1 && 
             <>
               <CarouselPrevious />
               <CarouselNext />
@@ -90,7 +97,13 @@ export function ProductDetails ({
         </Carousel>
         <DialogHeader>
           {isProductLoading ?
+          <>
+            <DialogTitle>
+            <DialogDescription>
+            </DialogDescription>
+            </DialogTitle>
             <Skeleton className="h-28 w-full"/>
+            </>
           :
           <>
             <DialogTitle>{product?.title}</DialogTitle>

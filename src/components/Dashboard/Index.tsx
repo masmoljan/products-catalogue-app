@@ -4,7 +4,6 @@ import { ProductCard } from "@/components/Product/Card";
 import { CardDescription } from "@/components/Product/CardDescription";
 import { DEFAULT_PAGINATION_LIMIT, NO_PRODUCTS_FOUND, PRICE_RANGE } from "@/utils/constants";
 import { ProductDetails } from "@/components/Product/Details";
-import { useGetProduct } from "@/hooks/useGetProduct";
 import { useGetProductsBySearch } from "@/hooks/useGetProductsBySearch";
 import { useGetProductCategories } from "@/hooks/useGetProductCategories";
 import { SearchBar } from "@/components/SearchBar/Index";
@@ -30,7 +29,10 @@ export default function Dashboard() {
   const [startPage, setstartPage] = useState(0);
   const [endPage, setendPage] = useState<number>(DEFAULT_PAGINATION_LIMIT);
 
-  const toggleShowDetails = () => {
+  const toggleShowDetails = (id?: number) => {
+    if(id) {
+      setSelectedProductId(id);
+    }
     setShowProductDetails(!showProductDetails);
   };
 
@@ -68,15 +70,6 @@ export default function Dashboard() {
     setendPage(total);
   };
 
-  const { 
-    data: product, 
-    isLoading: isProductLoading, 
-    error: ProductError 
-  } : {
-    data: Product | undefined
-    isLoading: boolean, 
-    error: string
-  } = useGetProduct(selectedProductId);
 
   const { 
     data: productsSearch,
@@ -151,7 +144,6 @@ export default function Dashboard() {
               price={product.price}
               thumbnail={product.thumbnail}
               toggleShowDetails={toggleShowDetails}
-              setProductId={setSelectedProductId}
             />
             )
           )}
@@ -161,13 +153,11 @@ export default function Dashboard() {
           <p>{NO_PRODUCTS_FOUND}</p>
         </div>
       )}
-      {showProductDetails && product &&
+      {showProductDetails && selectedProductId &&
         <ProductDetails 
           open={showProductDetails}
           toggleShowDetails={toggleShowDetails}
-          product={product}
-          isProductLoading={isProductLoading}
-          productError={ProductError}
+          productId={selectedProductId}
         />
       }
       {!isProductsSearchLoading &&
