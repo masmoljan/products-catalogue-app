@@ -72,4 +72,20 @@ describe('renders a product card', () => {
     const productDetails = screen.queryByRole('button');
     expect(productDetails).not.toBeInTheDocument();
   });
+
+  it('should not render a product fallback image if thumbnail prop is not passed', () => {
+    render(
+      <ProductCard
+        key={product.id} 
+        id={product.id}
+        title={product.title}
+        description={<CardDescription description={product.description}/>}
+        price={product.price}
+        thumbnail={''}
+      />
+    );
+
+    const productFallbackImage = screen.getByTitle('product-fallback-image');
+    expect(productFallbackImage).toBeInTheDocument();
+  });
 });

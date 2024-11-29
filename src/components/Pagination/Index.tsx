@@ -14,7 +14,9 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { PAGINATION_OPTIONS } from "@/utils/constants";
+import { ProductsPerPage } from "@/validation/pagination";
 import { useState } from "react";
+import { toast } from "sonner";
 
 interface PaginationProps {
   total: number
@@ -33,6 +35,16 @@ export function BasicPagination({
 } : PaginationProps) {
 
   const [rowsPerPage, setRowsPerPage] = useState<number>(PAGINATION_OPTIONS[0]);
+
+  const validateSelection = (value : number) => {
+    const validate = ProductsPerPage.safeParse(value);
+    if (!validate.success) {
+      validate.error.issues.map(issue => toast(issue.message));
+      return;
+    }
+    setRowsPerPage(+value);
+    handleProductsPerPage(+value);
+  };
 
   return (
     <footer className="border-t sticky min-w-full bottom-0 bg-stone-50 px-4">
@@ -65,8 +77,7 @@ export function BasicPagination({
           <Select 
             value={`${rowsPerPage}`}
             onValueChange={(value) => {
-              setRowsPerPage(+value);
-              handleProductsPerPage(+value);
+              validateSelection(+value);
             }}
           >
             <SelectTrigger className="max-w-fit">

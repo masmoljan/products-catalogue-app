@@ -7,7 +7,7 @@ import {
 } from "@/components/ui/card";
 
 import { Button } from "../ui/button";
-import { DEFAULT_CURRENCY } from "@/utils/constants";
+import { BUTTONS, DEFAULT_CURRENCY } from "@/utils/constants";
 import { Image } from "lucide-react";
 
 interface ProductCardProps {
@@ -35,7 +35,9 @@ export function ProductCard ({
           {thumbnail ?
             <img className="w-full h-full" loading="lazy" src={thumbnail}/>
           :
-            <Image className="w-full h-full"/>
+            <div title="product-fallback-image">
+              <Image className="w-full h-full"/>
+            </div>
           }
         </div>
         <CardTitle title="product-title" className="min-h-8">{title}</CardTitle>
@@ -56,7 +58,7 @@ export function ProductCard ({
               toggleShowDetails(id);
             }}
           >
-            Details
+            {BUTTONS.DETAILS}
           </Button>
         }
       </CardContent>

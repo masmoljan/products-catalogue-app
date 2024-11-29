@@ -75,7 +75,6 @@ describe('renders a product image gallery', () => {
       const productGallery = screen.getByTitle('product-gallery');
       const productImages = screen.getByTitle('product-images');
 
-  
       expect(productGallery).toBeInTheDocument();
       expect(productImages).toBeInTheDocument();
     });

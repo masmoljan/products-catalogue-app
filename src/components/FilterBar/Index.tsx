@@ -14,6 +14,7 @@ import {
 import { useState } from "react";
 import { Slider } from "../ui/slider";
 import { 
+  BUTTONS,
   DEFAULT_CURRENCY, 
   PRICE_RANGE, 
   PRICE_RANGE_LABEL 
@@ -84,11 +85,11 @@ export function FilterBar({
           variant="outline"
           onClick={() => setOpen(true)}
         >
-          Filter
+          {BUTTONS.FILTER}
           {filterActive && <Dot color="red" strokeWidth={10} />}
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="flex flex-col gap-4 w-screen sm:w-72">
+      <PopoverContent className="flex flex-col gap-4 w-screen sm:w-80">
         <Select 
           value={category}
           onValueChange={(value) => {
@@ -124,7 +125,7 @@ export function FilterBar({
         <Button 
           onClick={() => {handleFilterSubmit();}}
         >
-          Submit
+          {BUTTONS.SUBMIT}
         </Button>
         <Button
           variant="secondary" 
@@ -132,7 +133,7 @@ export function FilterBar({
             handleFilterReset();
           }}
         >
-          Reset
+          {BUTTONS.RESET}
         </Button>
       </PopoverContent>
     </Popover>
