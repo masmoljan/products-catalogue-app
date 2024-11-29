@@ -41,7 +41,10 @@ export function ProductCard ({
           }
         </div>
         <CardTitle title="product-title" className="min-h-8">{title}</CardTitle>
-        <CardDescription title="product-description" className="min-h-[60px] text-justify">
+        <CardDescription 
+          title="product-description" 
+          className="min-h-[60px] text-justify hyphens-auto"
+        >
           {description}
         </CardDescription>
       </CardHeader>

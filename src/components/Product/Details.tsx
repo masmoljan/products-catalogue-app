@@ -27,6 +27,7 @@ import { Image } from "lucide-react";
 import { ProductDetailsTable } from "./DetailsTable";
 import ProductReviewCard from "./ReviewCard";
 import { ScrollArea } from "../ui/scroll-area";
+import { useState } from "react";
 
 interface ProductDetailsProps {
   product: Product
@@ -44,6 +45,12 @@ export function ProductDetails ({
   productError
 } : ProductDetailsProps) {
 
+  const [imageLoaded, setImageLoaded] = useState<boolean>(false);
+
+  const handleOnLoad = () => {
+    setImageLoaded(true);
+  };
+
   if(productError) {
     return (
       <Error errorMessage={productError} />
@@ -59,12 +66,17 @@ export function ProductDetails ({
           <CarouselContent className="h-64 w-64">
             {product?.images.map((image, index) => (
               <CarouselItem key={index}>
-                <img className="h-full w-full object-contain" src={image} />
+                <img 
+                  className="h-full w-full object-contain"
+                  loading={index === 0 ? "eager" : "lazy"}
+                  onLoad={() => handleOnLoad()}
+                  src={imageLoaded ? image : product.thumbnail} 
+                />
               </CarouselItem>
             ))}
             {!product?.images.length &&
               <CarouselItem >
-                <Image className="h-full w-full object-contain" />
+                <Image className="h-full w-full object-contain" width="10px" height="10px" />
               </CarouselItem>
             }
           </CarouselContent>
@@ -82,7 +94,7 @@ export function ProductDetails ({
           :
           <>
             <DialogTitle>{product?.title}</DialogTitle>
-            <DialogDescription className="text-justify min-h-[60px]">
+            <DialogDescription className="text-justify hyphens-auto min-h-[60px]">
               {product?.description}
             </DialogDescription>
           </>
