@@ -45,7 +45,7 @@ export function ProductDetails ({
   const { 
     data: product, 
     isLoading: isProductLoading, 
-    error: ProductError 
+    error: productError 
   } : {
     data: Product | undefined
     isLoading: boolean, 
@@ -58,19 +58,14 @@ export function ProductDetails ({
     setImageLoaded(true);
   };
 
-  if(ProductError) {
-    return (
-      <Error errorMessage={ProductError} />
-    );
-  }
-
   return (
     <Dialog open={open} onOpenChange={() => toggleShowDetails()}>
       <DialogContent className="max-h-screen">
-        <Carousel className="flex justify-self-center">
-          {isProductLoading ? <Skeleton className="h-64 w-64" />
+        {productError && <Error errorMessage={productError} />}
+        <Carousel title="product-gallery" className="flex justify-self-center">
+          {isProductLoading ? <Skeleton title="product-gallery-skeleton" className="h-64 w-64" />
           :          
-          <CarouselContent className="h-64 w-64">
+          <CarouselContent title="product-images" className="h-64 w-64">
             {product?.images.map((image, index) => (
               <CarouselItem key={index}>
                 <img 
@@ -102,7 +97,7 @@ export function ProductDetails ({
             <DialogDescription>
             </DialogDescription>
             </DialogTitle>
-            <Skeleton className="h-28 w-full"/>
+            <Skeleton title="product-title-skeleton" className="h-28 w-full"/>
             </>
           :
           <>

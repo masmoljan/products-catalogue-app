@@ -1,12 +1,9 @@
 import { SearchQueryParams } from '@/types';
 import axiosInstance from './axiosInstance';
 import { 
-  AUTHENTICATED_USER_URL,
-  LOGIN_URL, 
   PRODUCT_CATEGORIES_URL, 
   PRODUCTS_SEARCH_URL, 
   PRODUCTS_URL, 
-  USERS_URL 
 } from './routes';
 import { 
   filterProductsByCategory, 
@@ -14,33 +11,6 @@ import {
   filterProductsByTitle 
 } from '@/utils';
 import { PRICE_RANGE } from '@/utils/constants';
-
-export const authenticateUser = async(body : object) => {
-  const response = await axiosInstance
-    .post(
-      LOGIN_URL, 
-      {
-        ...body,
-      },
-      {
-        withCredentials: true
-      }
-  );
-
-  return response;
-};
-
-export const getAuthenticatedUser = async() => {
-  const response = await axiosInstance.get(AUTHENTICATED_USER_URL);
-
-  return response;
-};
-
-export const getUsers = async() => {
-  const response = await axiosInstance.get(USERS_URL);
-
-  return response;
-};
 
 export const getProductCategories = async() => {
   const response = await axiosInstance.get(PRODUCT_CATEGORIES_URL);
