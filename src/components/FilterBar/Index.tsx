@@ -38,7 +38,7 @@ export function FilterBar({
   const [filterActive, setFilterActive] = useState<boolean>(false);
   const [category, setCategory] = useState<string>("");
   const [priceRanges, setPriceRanges] = 
-    useState<number[]>([-1, PRICE_RANGE.max]);
+    useState<number[]>([PRICE_RANGE.min, PRICE_RANGE.max]);
 
   const handleFilterReset = () => {
     setCategory("");
