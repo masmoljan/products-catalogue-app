@@ -74,6 +74,7 @@ export const getProductsBySearch = async(queryParams : SearchQueryParams) => {
 
   if (sortBy === SORT_BY_OPTIONS.TITLE) {
     response.data.products = sortProductsByTitle(response.data.products, order);
+    response.data.products = response.data.products.slice(customFilterSkip, customFilterLimit);
   }
 
   return response;
