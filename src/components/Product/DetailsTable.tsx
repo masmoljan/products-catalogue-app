@@ -5,7 +5,11 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Product } from "@/types";
-import { DEFAULT_WEIGHT_UNIT, PRODUCT_DETAIL_LABELS } from "@/utils/constants";
+import { 
+  DEFAULT_WEIGHT_UNIT, 
+  PRODUCT_DETAIL_LABELS, 
+  PRODUCT_DETAILS_PLACEHOLDER 
+} from "@/utils/constants";
 
 interface ProductDetailsTableProps {
   product : Product
@@ -21,7 +25,7 @@ export function ProductDetailsTable ({
       <TableBody className="capitalize">
         <TableRow>
           <TableCell>{PRODUCT_DETAIL_LABELS.BRAND}</TableCell>
-          <TableCell>{product.brand}</TableCell>
+          <TableCell>{product.brand || PRODUCT_DETAILS_PLACEHOLDER.BRAND}</TableCell>
         </TableRow>
         <TableRow>
           <TableCell>{PRODUCT_DETAIL_LABELS.AVAILABILITY}</TableCell>  

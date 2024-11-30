@@ -29,6 +29,7 @@ import ProductReviewCard from "./ReviewCard";
 import { ScrollArea } from "../ui/scroll-area";
 import { useState } from "react";
 import { useGetProduct } from "@/hooks/useGetProduct";
+import { TABS } from "@/utils/constants";
 
 interface ProductDetailsProps {
   open: boolean,
@@ -118,8 +119,8 @@ export function ProductDetails ({
                 defaultValue="details" 
                 className="w-full flex flex-col items-center">
                 <TabsList title="tabs-list" className="min-w-full">
-                  <TabsTrigger className="w-full" value="details">Details</TabsTrigger>
-                  <TabsTrigger className="w-full" value="reviews">Reviews</TabsTrigger>
+                  <TabsTrigger className="w-full" value="details">{TABS.DETAILS}</TabsTrigger>
+                  <TabsTrigger className="w-full" value="reviews">{TABS.REVIEWS}</TabsTrigger>
                 </TabsList>
                 <TabsContent value="details" className="w-full">
                   {product && <ProductDetailsTable product={product}/>}

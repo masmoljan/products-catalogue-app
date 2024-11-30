@@ -1,4 +1,5 @@
-import { Product } from "@/types";
+import { Data, Product } from "@/types";
+import { ORDER_OPTIONS } from "./constants";
 
 export function scrollToTop () {
   window.scroll(0, 0);
@@ -22,5 +23,20 @@ export function filterProductsByPriceRange (products : Array<Product>, minPrice 
   return products.filter((product : Product) => 
     Number(product.price) > minPrice && Number(product.price) < maxPrice
   );
+}
+
+export function sortProductsByTitle (products : Array<Product>, order : string) {
+  products.sort((a : Product, b : Product) => {
+    return order === ORDER_OPTIONS.ASCENDING 
+      ? a.title.toLocaleLowerCase().localeCompare(b.title.toLocaleLowerCase())
+      : b.title.toLocaleLowerCase().localeCompare(a.title.toLocaleLowerCase());
+  });
+  return products;
+}
+
+export function applyCustomProductFilter (data: Data, customSkip: number, customLimit: number) {
+  data.total = data.products.length;
+  data.products = data.products.slice(customSkip, customLimit);
+  return data;
 }
 

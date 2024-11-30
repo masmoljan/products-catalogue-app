@@ -34,9 +34,18 @@ export const PRODUCT_DETAIL_LABELS = {
   WARRANTY: "Warranty"
 };
 
+export const PRODUCT_DETAILS_PLACEHOLDER = {
+  BRAND: "No brand"
+};
+
 export const BUTTONS = {
   DETAILS: "Details",
   FILTER: "Filter",
   SUBMIT: "Submit",
   RESET: "Reset"
+};
+
+export const TABS = {
+  DETAILS: "Details",
+  REVIEWS: "Reviews"
 };

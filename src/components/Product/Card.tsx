@@ -15,7 +15,7 @@ interface ProductCardProps {
   title: string,
   description: React.ReactElement,
   price: number,
-  thumbnail?: string,
+  thumbnail: string,
   toggleShowDetails?: (id: number) => void,
 }
 
