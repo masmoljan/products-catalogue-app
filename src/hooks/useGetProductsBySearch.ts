@@ -1,4 +1,4 @@
-import { getProductsBySearch } from "@/api";
+import { getProductsBySearch } from "@/api/product";
 import { Data, SearchQueryParams } from "@/types";
 import { useState } from "react";
 import { useDeepCompareEffect } from "use-deep-compare";

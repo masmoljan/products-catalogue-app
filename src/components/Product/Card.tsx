@@ -43,15 +43,16 @@ export function ProductCard ({
         <CardTitle title="product-title" className="min-h-8">{title}</CardTitle>
         <CardDescription 
           title="product-description" 
-          className="min-h-[60px] text-justify hyphens-auto"
+          className="min-h-[60px] text-justify hyphens-auto text-sm xl:text-base"
         >
           {description}
         </CardDescription>
       </CardHeader>
       <CardContent className="flex items-center justify-around pt-6 bg-slate-100">
-        <p title="product-price">{price + DEFAULT_CURRENCY}</p>
+        <p className="text-lg" title="product-price">{price + DEFAULT_CURRENCY}</p>
         {toggleShowDetails &&
           <Button
+            className="2xl:font-semibold"
             title="product-details-button" 
             type="button"
             onClick={() => {

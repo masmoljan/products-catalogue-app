@@ -1,4 +1,4 @@
-import { getProductById } from "@/api";
+import { getProductById } from "@/api/product";
 import { Product } from "@/types";
 import { useEffect, useState } from "react";
 

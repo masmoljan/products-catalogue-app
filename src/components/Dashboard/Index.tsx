@@ -112,7 +112,7 @@ export default function Dashboard() {
   
   return (
     <div className="flex flex-col items-center pt-4 min-h-dvh">
-      <div className="flex flex-col items-center gap-2 pl-4 pr-4 w-full max-w-lg">
+      <div className="flex flex-col items-center gap-2 pl-4 pr-4 w-full max-w-xl">
         {isProductsSearchLoading || isProductCategoriesLoading ? 
           <>
             <SkeletonFilter />
@@ -135,7 +135,7 @@ export default function Dashboard() {
         }
       </div>
       <div 
-        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 p-4"
+        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4 p-4"
       >
         { isProductsSearchLoading ? 
           <SkeletonCard skeletonAmout={endPage}/>

@@ -48,9 +48,9 @@ export function BasicPagination({
 
   return (
     <footer className="border-t sticky min-w-full bottom-0 bg-stone-50 px-4">
-      <div className="container flex items-center justify-between py-2">
+      <div className="container min-w-full flex items-center justify-between py-2">
         <div className="w-1/3" />
-        <div className="flex flex-1 justify-center">
+        <div className="flex w-1/3 flex-1 justify-center">
           <Pagination>
             <PaginationContent>
               <PaginationItem>

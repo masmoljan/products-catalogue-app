@@ -66,7 +66,10 @@ export function ProductDetails ({
         <Carousel title="product-gallery" className="flex justify-self-center">
           {isProductLoading ? <Skeleton title="product-gallery-skeleton" className="h-64 w-64" />
           :          
-          <CarouselContent title="product-images" className="h-64 w-64">
+          <CarouselContent 
+            title="product-images" 
+            className="h-64 w-64 2xl:w-96 2xl:h-96"
+          >
             {product?.images.map((image, index) => (
               <CarouselItem key={index}>
                 <img 

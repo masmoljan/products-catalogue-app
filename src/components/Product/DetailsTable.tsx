@@ -20,7 +20,7 @@ export function ProductDetailsTable ({
 } : ProductDetailsTableProps) {
 
   return (
-    <div title="product-details-table" className="max-h-32 overflow-y-auto border rounded-xl">
+    <div title="product-details-table" className="max-h-32 2xl:max-h-full overflow-y-auto border rounded-xl">
     <Table>
       <TableBody className="capitalize">
         <TableRow>
