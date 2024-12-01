@@ -58,7 +58,7 @@ npm run test
 ```
 
 # Additional documentation
-## Security measurements
+## Security measures
 
 Since the application has a search functionality that requires an input field where the user can search for products by name, it can also serve as a vulnerable point where malicious users could enter code or scripts and retrieve and modify information such as user session and user activity.</br>
 
