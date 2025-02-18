@@ -71,6 +71,7 @@ export function FilterBar({
       validateCategory.error?.issues.map((issue) => 
         toast.error(issue.message)
       );
+      return;
     }
 
     handleFilterByCategory(category, priceRanges as [number, number]);
