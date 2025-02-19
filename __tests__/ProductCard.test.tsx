@@ -1,5 +1,5 @@
 /* eslint-disable max-len */
-import { ProductCard } from "@/components/Product/Card";
+import { ProductCard } from "@/components/Product/Product";
 import { CardDescription } from "@/components/Product/CardDescription";
 import {render, screen} from '@testing-library/react';
 

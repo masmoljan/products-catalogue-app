@@ -1,112 +1,63 @@
-import { useEffect, useRef, useState } from "react";
-import { Data, Product } from "@/types";
-import { ProductCard } from "@/components/Product/Card";
-import { CardDescription } from "@/components/Product/CardDescription";
-import { DEFAULT_PAGINATION_LIMIT, NO_PRODUCTS_FOUND, PRICE_RANGE } from "@/utils/constants";
-import { ProductDetails } from "@/components/Product/Details";
-import { useGetProductsBySearch } from "@/hooks/useGetProductsBySearch";
-import { useGetProductCategories } from "@/hooks/useGetProductCategories";
+import { useEffect } from "react";
+import { Product } from "@/types";
+import ProductCard from "@/components/Product/Product";
+import { NO_PRODUCTS_FOUND } from "@/utils/constants";
+import { ProductDetails } from "@/components/ProductDetails/Details";
 import { SearchBar } from "@/components/SearchBar/Index";
 import { FilterBar } from "@/components/FilterBar/Index";
 import { SortBar } from "@/components/SortBar";
 import { SkeletonCard } from "@/components/Skeleton/Card";
 import { BasicPagination } from "@/components/Pagination/Index";
-import { Error } from "@/components/Error/Index";
+import Error from "@/components/Error/Index";
 import { SkeletonFilter } from "@/components/Skeleton/Filter";
-import { throttle } from "lodash";
 import { scrollToTop } from "@/utils";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store";
+import { useGetProductCategoriesQuery, useGetProductsBySearchQuery } from "@/api/productsSlice";
 
 export default function Dashboard() {
-  const [sortBy, setSortBy] = useState("");
-  const [order, setOrder] = useState("");
-
-  const [showProductDetails, setShowProductDetails] = useState<boolean>(false);
-  const [selectedProductId, setSelectedProductId] = useState<number>(Number);
-  const [searchTerm, setSearchTerm] = useState<string>("");
-  const [productCategory, setProductCategory] = useState<string>("");
-  const [minPrice, setMinPrice] = useState(PRICE_RANGE.min);
-  const [maxPrice, setMaxPrice] = useState(PRICE_RANGE.max);
-
-  const [startPage, setstartPage] = useState(0);
-  const [endPage, setendPage] = useState<number>(DEFAULT_PAGINATION_LIMIT);
-
-  const toggleShowDetails = (id?: number) => {
-    if(id) {
-      setSelectedProductId(id);
-    }
-    setShowProductDetails(!showProductDetails);
-  };
-
-  const handleSearch = (searchTerm : string) => {
-    setSearchTerm(searchTerm);
-    handleProductsPerPage(endPage - startPage);
-  };
-
-  const handleSearchClear = () => {
-    setSearchTerm('');
-  };
-
-  const handleFilterByCategory = (category : string, priceRange : number[]) => {
-    setProductCategory(category);
-    setMinPrice(priceRange[0]);
-    setMaxPrice(priceRange[1]);
-    setstartPage(0);
-    setendPage(endPage - startPage);
-  };
-
-  const handleSort = (options: string) => {
-    setSortBy(options.split('-')[0]);
-    setOrder(options.split('-')[1]);
-  };
-
-  const handlePagination = (start: number, end: number) => {
-    setstartPage(start);
-    setendPage(end);
-  };
-
-  const throttleHandlePagination = useRef(throttle(handlePagination, 500));
-
-  const handleProductsPerPage = (total: number) => {
-    setstartPage(0);
-    setendPage(total);
-  };
+  const sortBy = useSelector((state : RootState) => state.productSort.sortBy);
+  const order = useSelector((state : RootState) => state.productSort.order);
+  const showProductDetails = useSelector((state : RootState) => state.productDetails.show);
+  const selectedProductId = useSelector((state : RootState) => state.productDetails.productId);
+  const productCategory = useSelector((state : RootState) => state.productFilter.category);
+  const minPrice = useSelector((state : RootState) => state.productFilter.priceRange[0]);
+  const maxPrice = useSelector((state : RootState) => state.productFilter.priceRange[1]);
+  const searchTerm = useSelector((state : RootState) => state.productSearch.searchTerm);
+  const startPage = useSelector((state: RootState) => state.productPagination.startPage);
+  const endPage = useSelector((state: RootState) => state.productPagination.endPage);
 
   useEffect(() => {
     scrollToTop();
   }, [startPage]);
 
+  const {
+    data: productCategories,
+    isLoading: isProductCategoriesLoading,
+    error: productCategoriesError
+  } = useGetProductCategoriesQuery({});
 
   const { 
     data: productsSearch,
     isLoading: isProductsSearchLoading,
     error: productsSearchError,
-    total: productsSearchCount
-  } : {
-    data: Data | undefined,
-    isLoading: boolean | undefined, 
-    error: string,
-    total: number
-  } = useGetProductsBySearch({ 
-    searchTerm,
-    select: "title,description,price,thumbnail,category",
-    skip: startPage,
-    limit: endPage - startPage, 
-    sortBy, 
-    order,
-    category: productCategory,
-    minPrice,
-    maxPrice
-  });
+  } = useGetProductsBySearchQuery({
+      skip: startPage,
+      limit: endPage - startPage, 
+      category: productCategory,
+      sortBy,
+      order,
+      minPrice,
+      maxPrice,
+      q: searchTerm,
+      select: "title,price,description,thumbnail,category"
+    });
 
-  const {
-    data: productCategories,
-    isLoading: isProductCategoriesLoading,
-    error: productCategoriesError
-  } = useGetProductCategories();
+  console.log("test", productsSearch);
 
   if(productsSearchError || productCategoriesError) {
     return (
-      <Error errorMessage={productsSearchError || productCategoriesError}/>
+      <Error />
     );
   }
   
@@ -120,16 +71,10 @@ export default function Dashboard() {
           </>
         :
           <>
-            <SearchBar 
-              handleSearch={handleSearch} 
-              handleSearchClear={handleSearchClear}
-            />
+            <SearchBar />
             <div className="flex w-full justify-between">
-              <FilterBar 
-                categories={productCategories}
-                handleFilterByCategory={handleFilterByCategory}
-              />
-              <SortBar handleSort={handleSort}/>
+              <FilterBar categories={productCategories}/>
+              <SortBar />
             </div>
           </>
         }
@@ -145,33 +90,29 @@ export default function Dashboard() {
               key={product.id} 
               id={product.id}
               title={product.title}
-              description={<CardDescription description={product.description}/>}
+              description={product.description}
               price={product.price}
               thumbnail={product.thumbnail}
-              toggleShowDetails={toggleShowDetails}
             />
             )
           )}
       </div>
-      {!productsSearchCount && (
+      {!productsSearch?.total && (
         <div className="min-h-screen text-center">
           <p>{NO_PRODUCTS_FOUND}</p>
         </div>
       )}
-      {showProductDetails && selectedProductId &&
+      {showProductDetails &&
         <ProductDetails 
           open={showProductDetails}
-          toggleShowDetails={toggleShowDetails}
           productId={selectedProductId}
         />
       }
-      {!isProductsSearchLoading &&
+      {productsSearch &&
         <BasicPagination 
-          total={productsSearchCount}
+          total={productsSearch.total}
           startPage={startPage}
           endPage={endPage}
-          handlePagination={throttleHandlePagination.current}
-          handleProductsPerPage={handleProductsPerPage}
         />
       }
     </div>

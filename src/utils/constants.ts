@@ -23,6 +23,8 @@ export const NO_PRODUCTS_FOUND = "No products found. Please change your search c
 export const ERROR_MESSAGE = "We apologize for the inconvenience. Please try again later, as we are experiencing an issue on our end.";
 export const ERROR_MESSAGE_REFERENCE = "Reference: ";
 
+export const ERROR_MISSING_API = "Missing API url in env file!"
+
 export const PRODUCT_DETAIL_LABELS = {
   AVAILABILITY: "Availability",
   BRAND: "Brand",

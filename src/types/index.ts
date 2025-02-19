@@ -59,7 +59,8 @@ export interface QueryParams {
   category?: string,
   minPrice: number,
   maxPrice: number,
-  select?: string
+  select?: string,
+  q: string
 }
 
 export interface SearchQueryParams extends QueryParams {

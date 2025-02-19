@@ -2,7 +2,7 @@
 
 
 import { render, screen, waitFor } from '@testing-library/react';
-import { ProductDetails } from '@/components/Product/Details';
+import { ProductDetails } from '@/components/ProductDetails/Details';
 
 beforeAll(() => {
   Object.defineProperty(window, 'matchMedia', {

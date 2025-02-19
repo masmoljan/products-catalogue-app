@@ -11,53 +11,51 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useState } from "react";
-import { Slider } from "../ui/slider";
+import { useRef, useState } from "react";
 import { 
   BUTTONS,
   DEFAULT_CURRENCY, 
-  PRICE_RANGE, 
-  PRICE_RANGE_LABEL 
+  PRICE_RANGE
 } from "@/utils/constants";
-import { isEmpty, isEqual } from "lodash";
 import { Dot } from "lucide-react";
 import { ProductCategorySchema, ProductFilterSchema } from "@/validation/product";
 import { toast } from "sonner";
+import { useDispatch, useSelector } from "react-redux";
+import { setProductFilter } from "@/reducer/productFilter";
+import { RootState } from "@/store";
+import { Input } from "../ui/input";
+import { Label } from "../ui/label";
+import { Separator } from "../ui/separator";
 
 
 interface FilterBarProps {
   categories?: Array<string>,
-  handleFilterByCategory: (category : string, value: [number, number]) => void;
 }
 
 export function FilterBar({
   categories,
-  handleFilterByCategory
 } : FilterBarProps) {
 
+  const dispatch = useDispatch()
+
   const [open, setOpen] = useState<boolean>(false);
-  const [filterActive, setFilterActive] = useState<boolean>(false);
-  const [category, setCategory] = useState<string>("");
-  const [priceRanges, setPriceRanges] = 
-    useState<number[]>([PRICE_RANGE.min, PRICE_RANGE.max]);
+  const [selectedCategory, setSelectedCatageory] = useState<string>("");
+
+  const filterActive = useSelector((state : RootState) => state.productFilter.filterActive)
+  const category = useSelector((state : RootState) => state.productFilter.category);
+  const priceRange = useSelector((state : RootState) => state.productFilter.priceRange);
+
+  const minPriceRef = useRef<HTMLInputElement>(null)
+  const maxPriceRef = useRef<HTMLInputElement>(null)
 
   const handleFilterReset = () => {
-    setCategory("");
-    setPriceRanges([PRICE_RANGE.min, PRICE_RANGE.max]);
+    dispatch(setProductFilter({category: "", priceRange: [PRICE_RANGE.min, PRICE_RANGE.max]}))
+    setOpen(false)
   };
 
-  const handleFilterActive = () => {
-    if(isEqual(priceRanges, [PRICE_RANGE.min, PRICE_RANGE.max]) 
-      && isEmpty(category)) 
-    {
-      setFilterActive(false);
-      return;
-    }
-    setFilterActive(true);
-  };
 
   const handleFilterSubmit = () => {
-    const validatePriceRanges = ProductFilterSchema.safeParse(priceRanges);
+    const validatePriceRanges = ProductFilterSchema.safeParse(priceRange);
     const validateCategory = ProductCategorySchema.safeParse(category);
 
     if(!validatePriceRanges.success) {
@@ -72,11 +70,13 @@ export function FilterBar({
         toast.error(issue.message)
       );
     }
-
-    handleFilterByCategory(category, priceRanges as [number, number]);
-    handleFilterActive();
+    dispatch(setProductFilter({
+      category: selectedCategory, 
+      priceRange: [Number(minPriceRef.current?.value), Number(maxPriceRef.current?.value)]
+    }))
     setOpen(false);
   };
+
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -92,9 +92,8 @@ export function FilterBar({
       <PopoverContent className="flex flex-col gap-4 w-screen sm:w-80">
         <Select 
           value={category}
-          onValueChange={(value) => {
-            setCategory(value);
-        }}>
+          onValueChange={setSelectedCatageory}
+        >
           <SelectTrigger className="min-w-full">
             <SelectValue placeholder="Category" />
           </SelectTrigger>
@@ -110,21 +109,34 @@ export function FilterBar({
             ))}
           </SelectContent>
         </Select>
-        <Slider 
-          defaultValue={priceRanges}
-          value={priceRanges} 
-          onValueChange={(priceRanges) => {
-            setPriceRanges(priceRanges);
-          }}
-          min={PRICE_RANGE.min}
-          max={PRICE_RANGE.max}
-          step={0.1}
-          minStepsBetweenThumbs={20}
-        />
-        <p>{PRICE_RANGE_LABEL} {priceRanges[0]} - {priceRanges[1]}{DEFAULT_CURRENCY}</p>
-        <Button 
-          onClick={() => {handleFilterSubmit();}}
-        >
+        <div className="flex items-center">
+          <div className="flex-grow">
+            <Separator />
+          </div>
+        <Label className="px-3">Price</Label>
+          <div className="flex-grow">
+            <Separator />
+          </div>
+        </div>
+        <div className="flex items-center gap-3">
+          <Label>
+            Min:
+          </Label>
+          <Input 
+            min={PRICE_RANGE.min} 
+            defaultValue={priceRange[0]}
+            ref={minPriceRef}
+            type="number"
+          />
+          <Label>Max:</Label>
+          <Input 
+            max={PRICE_RANGE.max} 
+            defaultValue={priceRange[1]}
+            ref={maxPriceRef}
+            type="number"
+          />
+        </div>
+        <Button onClick={() => {handleFilterSubmit();}}>
           {BUTTONS.SUBMIT}
         </Button>
         <Button

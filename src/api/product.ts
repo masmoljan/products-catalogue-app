@@ -12,7 +12,7 @@ import {
   filterProductsByTitle, 
   sortProductsByTitle
 } from '@/utils';
-import { PRICE_RANGE, SORT_BY_OPTIONS } from '@/utils/constants';
+import { PRICE_RANGE } from '@/utils/constants';
 
 export const getProductCategories = async() => {
   const response = await axiosInstance.get(PRODUCT_CATEGORIES_URL);
@@ -30,27 +30,42 @@ export const getProductsBySearch = async(queryParams : SearchQueryParams) => {
   const { 
     searchTerm,
     sortBy,
-    select,
     order, 
-    category, 
-    minPrice, 
-    maxPrice 
+    category
   } = queryParams;
+
+  const { minPrice, maxPrice } = queryParams;
 
   let { limit, skip } = queryParams;
 
   const customFilterLimit = limit + skip;
   const customFilterSkip = skip;
 
-  if(searchTerm || category || minPrice !== PRICE_RANGE.min || maxPrice !== PRICE_RANGE.max || sortBy === SORT_BY_OPTIONS.TITLE) {
+  if(searchTerm || category || minPrice !== PRICE_RANGE.min || maxPrice !== PRICE_RANGE.max) {
     limit = 0;
     skip = 0;
   }
 
   const queryUrl = 
-    `?q=${searchTerm}&limit=${limit}&skip=${skip}&sortBy=${sortBy}&order=${order}&select=${select}`;
+    `?q=${searchTerm}&limit=${limit}&skip=${skip}&sortBy=${sortBy}&order=${order}`;
+
+  let customUrl = ""
+
+  Object.entries(queryParams).forEach(([k,v]) => 
+    {
+      if (k === "searchTerm") {
+        customUrl += `?q=${v}`
+      }
+      if(!v) return
+
+      customUrl += `&${k}=${v}`
+    }
+  );
+
 
   const response = await axiosInstance.get(PRODUCTS_SEARCH_URL + queryUrl);
+
+  console.log(customUrl)
 
   if(searchTerm) {
     response.data.products = filterProductsByTitle(response.data.products, searchTerm);
@@ -72,10 +87,10 @@ export const getProductsBySearch = async(queryParams : SearchQueryParams) => {
    * because the API returns product results in an incorrect order
    */
 
-  if (sortBy === SORT_BY_OPTIONS.TITLE) {
+/*   if (sortBy === SORT_BY_OPTIONS.TITLE) {
     response.data.products = sortProductsByTitle(response.data.products, order);
     response.data.products = response.data.products.slice(customFilterSkip, customFilterLimit);
   }
-
+ */
   return response;
 };

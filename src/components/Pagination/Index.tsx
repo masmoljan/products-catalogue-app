@@ -13,28 +13,30 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { setNextPage, setPreviousPage, setRowsPerPage } from "@/reducer/productPagination";
+import { RootState } from "@/store";
 import { PAGINATION_OPTIONS } from "@/utils/constants";
 import { ProductsPerPage } from "@/validation/pagination";
-import { useState } from "react";
+import { throttle } from "lodash";
+import { useEffect, useMemo } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { toast } from "sonner";
 
 interface PaginationProps {
   total: number
   startPage: number,
-  endPage: number,
-  handlePagination: (start: number, end: number) => void,
-  handleProductsPerPage: (total: number) => void,
+  endPage: number
 }
 
 export function BasicPagination({
   total,
   startPage,
-  endPage,
-  handlePagination,
-  handleProductsPerPage
+  endPage
 } : PaginationProps) {
 
-  const [rowsPerPage, setRowsPerPage] = useState<number>(PAGINATION_OPTIONS[0]);
+  const dispatch = useDispatch();
+
+  const rowsPerPage = useSelector((state : RootState) => state.productPagination.rowsPerPage);
 
   const validateSelection = (value : number) => {
     const validate = ProductsPerPage.safeParse(value);
@@ -42,9 +44,24 @@ export function BasicPagination({
       validate.error.issues.map(issue => toast(issue.message));
       return;
     }
-    setRowsPerPage(+value);
-    handleProductsPerPage(+value);
+    dispatch(setRowsPerPage({rowsPerPage: value}));
   };
+
+  const getNextPage = useMemo(() => 
+    throttle(() => dispatch(setNextPage()), 1000), [dispatch]
+  );
+  const getPreviousPage = useMemo(() => 
+    throttle(() => dispatch(setPreviousPage()), 1000), [dispatch]
+);
+
+
+  useEffect(()=> {
+    return () => {
+      getNextPage.cancel();
+      getPreviousPage.cancel();
+    };
+  }, [getNextPage, getPreviousPage]);
+  
 
   return (
     <footer className="border-t sticky min-w-full bottom-0 bg-stone-50 px-4">
@@ -56,17 +73,13 @@ export function BasicPagination({
               <PaginationItem>
                 <PaginationPrevious
                   disabled={startPage === 0}
-                  onClick={() => {
-                    handlePagination(startPage - rowsPerPage, endPage - rowsPerPage);
-                  }}
+                  onClick={getPreviousPage}
                 />
               </PaginationItem>
               <PaginationItem>
                 <PaginationNext
                   disabled={endPage >= total}
-                  onClick={() => {
-                    handlePagination(startPage + rowsPerPage, endPage + rowsPerPage);
-                  }}
+                  onClick={getNextPage}
                 />
               </PaginationItem>
             </PaginationContent>
@@ -82,7 +95,7 @@ export function BasicPagination({
           >
             <SelectTrigger className="max-w-fit">
               <SelectValue 
-                placeholder={PAGINATION_OPTIONS[0]}
+                placeholder={`${rowsPerPage}`}
               />
             </SelectTrigger>
             <SelectContent className="min-w-0 max-w-fit">

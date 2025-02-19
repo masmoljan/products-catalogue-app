@@ -5,13 +5,12 @@ import {
   SelectTrigger,
   SelectValue
 } from "@/components/ui/select";
+import { setProductSort } from "@/reducer/productSort";
 import { ORDER_OPTIONS, SORT_BY_OPTIONS } from "@/utils/constants";
 import { ProductSortBySchema } from "@/validation/product";
+import { useDispatch } from "react-redux";
 import { toast } from "sonner";
 
-interface SortBarProps {
-  handleSort: (options : string) => void
-}
 
 const validateSort = (value: string) => {
   const validate = ProductSortBySchema.safeParse(value);
@@ -23,11 +22,12 @@ const validateSort = (value: string) => {
   return true;
 };
 
-export function SortBar({
-  handleSort
-} : SortBarProps) {
+export function SortBar() {
+
+  const dispatch = useDispatch();
+
   return (
-    <Select onValueChange={(value) => validateSort(value) && handleSort(value)}>
+    <Select onValueChange={(value) => validateSort(value) && dispatch(setProductSort(value))}>
       <SelectTrigger className="max-w-fit">
         <SelectValue placeholder="Sort by" />
       </SelectTrigger>

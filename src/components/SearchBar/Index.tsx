@@ -1,24 +1,20 @@
 import { useRef, useState } from "react";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
-import { Search, SearchIcon, X } from "lucide-react";
+import { Search, X } from "lucide-react";
 import { SEARCH_CHARACTER_LIMIT } from "@/utils/constants";
 import { ProductSearchSchema } from "@/validation/searchProduct";
 import { toast } from "sonner";
+import { useDispatch } from "react-redux";
+import { setSearchTerm } from "@/reducer/productSearch";
+import { resetPagination } from "@/reducer/productPagination";
 
-interface SearchBarProps {
-  handleSearch: (searchTerm: string) => void;
-  handleSearchClear: () => void;
-}
 
-export function SearchBar({ 
-  handleSearch,
-  handleSearchClear
-} : SearchBarProps) {
+export function SearchBar() {
 
   const [input, setInput] = useState<string>('');
-  const [previousInput, setPreviousInput] = useState('');
   const searchRef = useRef<HTMLInputElement | null>(null);
+  const dispatch = useDispatch()
 
   const handleInput = (input: string) => {
     if(input.length >= SEARCH_CHARACTER_LIMIT) {
@@ -37,10 +33,8 @@ export function SearchBar({
       );
       return;
     }
-
-    if(input === previousInput) return;
-    setPreviousInput(input);
-    handleSearch(input);
+    dispatch(resetPagination());
+    dispatch(setSearchTerm(input));
   };
 
   return (
@@ -62,7 +56,7 @@ export function SearchBar({
       <Input 
         onChange={(e) => handleInput(e.target.value)}
         onKeyDown={(e) => {
-          if(!input.length || e.key !== "Enter") return;
+          if(e.key !== "Enter") return;
           handleSubmit(input);
         }}
         ref={searchRef}
@@ -71,20 +65,12 @@ export function SearchBar({
         placeholder="Enter product name..." 
         className="w-full" 
       />
-      <Button 
-        type="submit"
-        disabled={!input.length}
-        onClick={() => handleSubmit(input)}
-      >
-        <p className="hidden sm:block">Search</p>
-        <SearchIcon className="sm:hidden"/>
-      </Button>
       <Button
         variant="secondary"
         disabled={!input.length}
         onClick={() => {
           setInput('');
-          handleSearchClear();
+          dispatch(setSearchTerm(''))
         }}
       >
         <p className="hidden sm:block">Clear</p>
