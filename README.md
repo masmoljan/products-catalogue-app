@@ -23,7 +23,7 @@ Using this app, the user should be able to:
 
 ### Client configuration
 
-**Make sure to provide `.env` file with correct values before running the application!**</br>
+### **Make sure to provide `.env` file with correct values before running the application!**</br>
 
 The project includes `.example.env` file that can be used as a reference if needed.
 
