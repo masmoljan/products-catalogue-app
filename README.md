@@ -61,7 +61,7 @@ npm run test
 
 To run the app with Docker, use the following command:
 ```
-docker compose up
+docker-compose up
 ```
 
 # Additional documentation
