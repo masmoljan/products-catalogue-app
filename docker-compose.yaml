@@ -1,0 +1,8 @@
+services:
+  client:
+    build: ./
+    container_name: products_app
+    environment:
+      VITE_SERVER_API_URL: ${VITE_SERVER_API_URL}
+    ports:
+      - '5173:5173'
