@@ -53,7 +53,7 @@ export function FilterBar({
       category: "", 
       priceRange: [PRICE_RANGE.min, PRICE_RANGE.max]
     }));
-    dispatch(setOpenProductFilter({open: false}))
+    dispatch(setOpenProductFilter({open: false}));
   };
 
 
@@ -106,7 +106,7 @@ export function FilterBar({
               <SelectItem
                 className="min-w-0"
                 key={index}
-                value={category}
+                value={selectedCategory}
               >
                 <p className="capitalize">{category}</p>
               </SelectItem>
@@ -138,7 +138,7 @@ export function FilterBar({
             type="number"
           />
         </div>
-        <Button onClick={() => {handleFilterSubmit()}}>
+        <Button onClick={() => {handleFilterSubmit();}}>
           {BUTTONS.SUBMIT}
         </Button>
         <Button
