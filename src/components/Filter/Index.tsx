@@ -14,18 +14,18 @@ import {
 import { useRef, useState } from "react";
 import { 
   BUTTONS,
-  DEFAULT_CURRENCY, 
   PRICE_RANGE
 } from "@/utils/constants";
 import { Dot } from "lucide-react";
 import { ProductCategorySchema, ProductFilterSchema } from "@/validation/product";
 import { toast } from "sonner";
 import { useDispatch, useSelector } from "react-redux";
-import { setProductFilter } from "@/reducer/productFilter";
+import { setOpenProductFilter, setProductFilter } from "@/reducer/productFilter";
 import { RootState } from "@/store";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import { Separator } from "../ui/separator";
+import FilterRangeInput from "./FilterRangeInput";
 
 
 interface FilterBarProps {
@@ -36,21 +36,25 @@ export function FilterBar({
   categories,
 } : FilterBarProps) {
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
-  const [open, setOpen] = useState<boolean>(false);
   const [selectedCategory, setSelectedCatageory] = useState<string>("");
 
-  const filterActive = useSelector((state : RootState) => state.productFilter.filterActive)
+  const filterOpen = useSelector((state : RootState) => state.productFilter.open);
+  const filterActive = useSelector((state : RootState) => state.productFilter.filterActive);
   const category = useSelector((state : RootState) => state.productFilter.category);
   const priceRange = useSelector((state : RootState) => state.productFilter.priceRange);
 
-  const minPriceRef = useRef<HTMLInputElement>(null)
-  const maxPriceRef = useRef<HTMLInputElement>(null)
+  const minPriceRef = useRef<HTMLInputElement>(null);
+  const maxPriceRef = useRef<HTMLInputElement>(null);
 
+   
   const handleFilterReset = () => {
-    dispatch(setProductFilter({category: "", priceRange: [PRICE_RANGE.min, PRICE_RANGE.max]}))
-    setOpen(false)
+    dispatch(setProductFilter({
+      category: "", 
+      priceRange: [PRICE_RANGE.min, PRICE_RANGE.max]
+    }));
+    dispatch(setOpenProductFilter({open: false}))
   };
 
 
@@ -74,17 +78,17 @@ export function FilterBar({
     dispatch(setProductFilter({
       category: selectedCategory, 
       priceRange: [Number(minPriceRef.current?.value), Number(maxPriceRef.current?.value)]
-    }))
-    setOpen(false);
+    }));
+    dispatch(setOpenProductFilter({open: false}));
   };
 
 
   return (
-    <Popover open={open} onOpenChange={setOpen}>
+    <Popover open={filterOpen} onOpenChange={() => dispatch(setOpenProductFilter({open: !filterOpen}))}>
       <PopoverTrigger asChild>
         <Button
           variant="outline"
-          onClick={() => setOpen(true)}
+          onClick={() => dispatch(setOpenProductFilter({open: !filterOpen}))}
         >
           {BUTTONS.FILTER}
           {filterActive && <Dot color="red" strokeWidth={10} />}
@@ -120,24 +124,22 @@ export function FilterBar({
           </div>
         </div>
         <div className="flex items-center gap-3">
-          <Label>
-            Min:
-          </Label>
-          <Input 
+          <FilterRangeInput 
+            label="Min:"
             min={PRICE_RANGE.min} 
             defaultValue={priceRange[0]}
             ref={minPriceRef}
             type="number"
           />
-          <Label>Max:</Label>
-          <Input 
+          <FilterRangeInput 
+            label="Max:"
             max={PRICE_RANGE.max} 
             defaultValue={priceRange[1]}
             ref={maxPriceRef}
             type="number"
           />
         </div>
-        <Button onClick={() => {handleFilterSubmit();}}>
+        <Button onClick={() => {handleFilterSubmit()}}>
           {BUTTONS.SUBMIT}
         </Button>
         <Button

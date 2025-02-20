@@ -6,14 +6,12 @@ import { DESCRIPTION_CHARACTER_LIMIT } from "@/utils/constants";
 import { truncate } from "@/utils";
 
 interface ProductHeaderProps {
-  id: number
   title: string
   thumbnail: string
   description: string
 }
 
 export default function ProductHeader({ 
-  id, 
   title, 
   thumbnail, 
   description 
@@ -22,7 +20,7 @@ export default function ProductHeader({
   description = truncate(description, DESCRIPTION_CHARACTER_LIMIT).concat("...");
     
   return (
-    <CardHeader key={id} className="items-center group p-4">
+    <CardHeader className="items-center group p-4">
       <ProductImage thumbnail={thumbnail} />
       <ProductTitle 
         title="product-title" 

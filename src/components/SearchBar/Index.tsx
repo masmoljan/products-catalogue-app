@@ -14,7 +14,7 @@ export function SearchBar() {
 
   const [input, setInput] = useState<string>('');
   const searchRef = useRef<HTMLInputElement | null>(null);
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   const handleInput = (input: string) => {
     if(input.length >= SEARCH_CHARACTER_LIMIT) {
@@ -70,7 +70,7 @@ export function SearchBar() {
         disabled={!input.length}
         onClick={() => {
           setInput('');
-          dispatch(setSearchTerm(''))
+          dispatch(setSearchTerm(''));
         }}
       >
         <p className="hidden sm:block">Clear</p>

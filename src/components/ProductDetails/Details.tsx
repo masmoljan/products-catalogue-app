@@ -4,38 +4,35 @@ import {
 } from "@/components/ui/dialog";
 
 import Error from "../Error/Index";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { toggleShow } from "@/reducer/productDetails";
 import { useGetProductByIdQuery } from "@/api/productsSlice";
 import ProductDetailsGallery from "./ProductDetailsGallery";
 import ProductDetailsHeader from "./ProductDetailsHeader";
 import ProductDetailsTabs from "./ProductDetailsTabs";
 import { Loader2 } from "lucide-react";
+import { RootState } from "@/store";
 
-interface ProductDetailsProps {
-  open: boolean,
-  productId: number
-}
+export function ProductDetails() {
 
-export function ProductDetails ({
-  open,
-  productId
-} : ProductDetailsProps) {
+  const showProductDetails = useSelector((state : RootState) => state.productDetails.show);
+  const productId = useSelector((state : RootState) => state.productDetails.productId);
 
   const {
     data: product, 
-    isLoading: isProductLoading,
+    isFetching: isProductLoading,
     error: productError 
-  } = useGetProductByIdQuery(productId);
+  } = useGetProductByIdQuery(productId, {skip: !productId});
 
   const dispatch = useDispatch();
+  
 
   if(isProductLoading) {
     return (<Loader2 className="animate-spin h-40 w-40" />);
   }
 
   return (
-    <Dialog open={open} onOpenChange={() => dispatch(toggleShow())}>
+    <Dialog open={showProductDetails} onOpenChange={() => dispatch(toggleShow())}>
       {productError && <Error />}
       <DialogContent className="max-h-screen">
       <ProductDetailsGallery 

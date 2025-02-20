@@ -5,11 +5,15 @@ import { isEmpty, isEqual } from "lodash";
 const productFilterSlice = createSlice({
   name: "productFilter",
   initialState: { 
+    open: false,
     filterActive: false, 
     category: "", 
     priceRange: [PRICE_RANGE.min, PRICE_RANGE.max] 
   },
   reducers: {
+    setOpenProductFilter: (state, action) => {
+      state.open = action.payload.open;
+    },
     setProductFilter: (state, action) => {
       state.category = action.payload.category;
       state.priceRange = action.payload.priceRange;
@@ -22,6 +26,6 @@ const productFilterSlice = createSlice({
   }
 });
 
-export const { setProductFilter } = productFilterSlice.actions;
+export const { setProductFilter, setOpenProductFilter } = productFilterSlice.actions;
 
 export default productFilterSlice.reducer;

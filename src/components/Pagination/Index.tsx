@@ -24,18 +24,16 @@ import { toast } from "sonner";
 
 interface PaginationProps {
   total: number
-  startPage: number,
-  endPage: number
 }
 
 export function BasicPagination({
-  total,
-  startPage,
-  endPage
+  total
 } : PaginationProps) {
 
   const dispatch = useDispatch();
 
+  const startPage = useSelector((state : RootState) => state.productPagination.startPage);
+  const endPage = useSelector((state : RootState) => state.productPagination.endPage);
   const rowsPerPage = useSelector((state : RootState) => state.productPagination.rowsPerPage);
 
   const validateSelection = (value : number) => {

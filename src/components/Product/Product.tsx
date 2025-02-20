@@ -20,7 +20,7 @@ export default function ProductCard ({
 
   return (
     <Card>
-      <ProductHeader id={id} title={title} description={description} thumbnail={thumbnail} />
+      <ProductHeader title={title} description={description} thumbnail={thumbnail} />
       <ProductActions id={id} price={price} />
     </Card>
   );

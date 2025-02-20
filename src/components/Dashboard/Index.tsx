@@ -4,7 +4,7 @@ import ProductCard from "@/components/Product/Product";
 import { NO_PRODUCTS_FOUND } from "@/utils/constants";
 import { ProductDetails } from "@/components/ProductDetails/Details";
 import { SearchBar } from "@/components/SearchBar/Index";
-import { FilterBar } from "@/components/FilterBar/Index";
+import { FilterBar } from "@/components/Filter/Index";
 import { SortBar } from "@/components/SortBar";
 import { SkeletonCard } from "@/components/Skeleton/Card";
 import { BasicPagination } from "@/components/Pagination/Index";
@@ -18,8 +18,6 @@ import { useGetProductCategoriesQuery, useGetProductsBySearchQuery } from "@/api
 export default function Dashboard() {
   const sortBy = useSelector((state : RootState) => state.productSort.sortBy);
   const order = useSelector((state : RootState) => state.productSort.order);
-  const showProductDetails = useSelector((state : RootState) => state.productDetails.show);
-  const selectedProductId = useSelector((state : RootState) => state.productDetails.productId);
   const productCategory = useSelector((state : RootState) => state.productFilter.category);
   const minPrice = useSelector((state : RootState) => state.productFilter.priceRange[0]);
   const maxPrice = useSelector((state : RootState) => state.productFilter.priceRange[1]);
@@ -42,18 +40,16 @@ export default function Dashboard() {
     isLoading: isProductsSearchLoading,
     error: productsSearchError,
   } = useGetProductsBySearchQuery({
-      skip: startPage,
-      limit: endPage - startPage, 
-      category: productCategory,
-      sortBy,
-      order,
-      minPrice,
-      maxPrice,
-      q: searchTerm,
-      select: "title,price,description,thumbnail,category"
-    });
-
-  console.log("test", productsSearch);
+    skip: startPage,
+    limit: endPage - startPage, 
+    category: productCategory,
+    sortBy,
+    order,
+    minPrice,
+    maxPrice,
+    q: searchTerm,
+    select: "title,price,description,thumbnail,category"
+  });
 
   if(productsSearchError || productCategoriesError) {
     return (
@@ -64,7 +60,7 @@ export default function Dashboard() {
   return (
     <div className="flex flex-col items-center pt-4 min-h-dvh">
       <div className="flex flex-col items-center gap-2 pl-4 pr-4 w-full max-w-xl">
-        {isProductsSearchLoading || isProductCategoriesLoading ? 
+        {isProductCategoriesLoading ? 
           <>
             <SkeletonFilter />
             <SkeletonFilter />
@@ -82,7 +78,7 @@ export default function Dashboard() {
       <div 
         className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4 p-4"
       >
-        { isProductsSearchLoading ? 
+        {isProductsSearchLoading ? 
           <SkeletonCard skeletonAmout={endPage}/>
         :
           productsSearch?.products.map((product : Product) => (
@@ -102,17 +98,10 @@ export default function Dashboard() {
           <p>{NO_PRODUCTS_FOUND}</p>
         </div>
       )}
-      {showProductDetails &&
-        <ProductDetails 
-          open={showProductDetails}
-          productId={selectedProductId}
-        />
-      }
+      <ProductDetails />
       {productsSearch &&
         <BasicPagination 
           total={productsSearch.total}
-          startPage={startPage}
-          endPage={endPage}
         />
       }
     </div>
