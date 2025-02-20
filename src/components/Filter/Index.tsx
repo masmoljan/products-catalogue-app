@@ -22,7 +22,6 @@ import { toast } from "sonner";
 import { useDispatch, useSelector } from "react-redux";
 import { setOpenProductFilter, setProductFilter } from "@/reducer/productFilter";
 import { RootState } from "@/store";
-import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import { Separator } from "../ui/separator";
 import FilterRangeInput from "./FilterRangeInput";
