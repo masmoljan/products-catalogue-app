@@ -46,10 +46,10 @@ export function BasicPagination({
   };
 
   const getNextPage = useMemo(() => 
-    throttle(() => dispatch(setNextPage()), 1000), [dispatch]
+    throttle(() => dispatch(setNextPage()), 400), [dispatch]
   );
   const getPreviousPage = useMemo(() => 
-    throttle(() => dispatch(setPreviousPage()), 1000), [dispatch]
+    throttle(() => dispatch(setPreviousPage()), 400), [dispatch]
 );
 
 
