@@ -95,7 +95,7 @@ export function FilterBar({
       </PopoverTrigger>
       <PopoverContent className="flex flex-col gap-4 w-screen sm:w-80">
         <Select 
-          value={category}
+          value={selectedCategory}
           onValueChange={setSelectedCatageory}
         >
           <SelectTrigger className="min-w-full">
@@ -106,7 +106,7 @@ export function FilterBar({
               <SelectItem
                 className="min-w-0"
                 key={index}
-                value={selectedCategory}
+                value={category}
               >
                 <p className="capitalize">{category}</p>
               </SelectItem>
