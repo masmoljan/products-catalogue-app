@@ -52,11 +52,6 @@ To run the app and expose it to the local network use the following command:
 npm run dev:host
 ```
 
-To run tests provided with app, use the following command
-```
-npm run test
-```
-
 ## Usage (Docker)
 
 To run the app with Docker, use the following command:
