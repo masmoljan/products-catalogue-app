@@ -78,7 +78,6 @@ This is the project structure with highlighted main parts:
 ```
 └── products-catalogue-app
     ├── README.md
-    ├── __tests__        <--- Test files and mocks
     ├── components.json
     ├── eslint.config.js
     ├── index.html
