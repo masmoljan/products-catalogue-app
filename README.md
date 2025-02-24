@@ -78,7 +78,6 @@ This is the project structure with highlighted main parts:
 ```
 └── products-catalogue-app
     ├── README.md
-    ├── __tests__        <--- Test files and mocks
     ├── components.json
     ├── eslint.config.js
     ├── index.html
@@ -88,7 +87,7 @@ This is the project structure with highlighted main parts:
     ├── src
     │   ├── App.css
     │   ├── App.tsx
-    │   ├── api          <--- Axios instance with baseURL, API handlers and routes
+    │   ├── api          <--- RTK instance with baseURL, API handlers and routes
     │   ├── components   <--- App components
     │   ├── hooks        <--- Custom hooks
     │   ├── index.css
