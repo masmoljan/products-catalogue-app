@@ -25,6 +25,7 @@ import { RootState } from "@/store";
 import { Label } from "../ui/label";
 import { Separator } from "../ui/separator";
 import FilterRangeInput from "./FilterRangeInput";
+import { resetPagination } from "@/reducer/productPagination";
 
 
 interface FilterBarProps {
@@ -54,6 +55,7 @@ export function FilterBar({
       priceRange: [PRICE_RANGE.min, PRICE_RANGE.max]
     }));
     dispatch(setOpenProductFilter({open: false}));
+    dispatch(resetPagination());
   };
 
 
@@ -79,6 +81,7 @@ export function FilterBar({
       priceRange: [Number(minPriceRef.current?.value), Number(maxPriceRef.current?.value)]
     }));
     dispatch(setOpenProductFilter({open: false}));
+    dispatch(resetPagination());
   };
 
 
