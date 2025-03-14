@@ -34,3 +34,9 @@ jobs:
         env:
           ECR_REGISTRY: ${{ steps.ecr-login.outputs.registry }}
           ECR_REPOSITORY: products-catalogue
+
+      - name: Deploy
+        run: |
+          aws ecs update-service \
+          --products-catalogue-demo \
+          --force-new-deployment
