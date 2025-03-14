@@ -38,6 +38,6 @@ jobs:
       - name: Deploy
         run: |
           aws ecs update-service \
-          --products-catalogue-demo \
+          --cluster products-catalogue-demo \
           --service products-catalogue-deploy \
           --force-new-deployment
