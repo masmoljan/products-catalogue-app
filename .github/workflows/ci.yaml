@@ -39,4 +39,5 @@ jobs:
         run: |
           aws ecs update-service \
           --products-catalogue-demo \
+          --service products-catalogue-deploy \
           --force-new-deployment
